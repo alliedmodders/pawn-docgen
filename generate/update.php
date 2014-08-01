@@ -143,7 +143,7 @@
 	
 	unset( $Functions, $Constants, $Line, $File, $IncludeList, $CommentBlock, $FunctionBuffer );
 	
-	/*
+	/**
 	 * @endsection
 	 */
 	
@@ -180,12 +180,12 @@
 	{
 		if( strpos( $Comment, '@' ) === 0 )
 		{
-			$matches = array($Comment, '');
+			$matches = array( $Comment, '' );
 		}
 		else
 		{
 			// clears all extra horizontal whitespace from the line endings to prevent parsing issues
-			$Comment = preg_replace('/\h*$/Sum', '', $Comment);
+			$Comment = preg_replace( '/\h*$/Sum', '', $Comment );
 			
 			preg_match(
 				'/
@@ -207,9 +207,9 @@
 				$matches
 			);
 			
-			array_shift($matches);
+			array_shift( $matches );
 			
-			while (count($matches) < 2)
+			while( count( $matches ) < 2 )
 			{
 				$matches[] = '';
 			}
@@ -221,7 +221,7 @@
 	function ParseTags( $tags )
 	{
 		$result = array();
-		$tags = trim($tags);
+		$tags = trim( $tags );
 		
 		if( $tags !== '' )
 		{
@@ -295,7 +295,7 @@
 			}
 			case 'noreturn':
 			{
-				if( !Empty( $Line ) )
+				if( !empty( $Line ) )
 				{
 					throw new Exception( '@noreturn must not contain any text: ' . $Line );
 				}
@@ -321,13 +321,13 @@
 	
 	function GetFunctionName( $Line2 )
 	{
-		$Line = SubStr( $Line2, 0, StrPos( $Line2, '(' ) );
+		$Line = substr( $Line2, 0, strpos( $Line2, '(' ) );
 		
-		$PositionStart = StrrPos( $Line, ':' );
+		$PositionStart = strrpos( $Line, ':' );
 		
 		if( $PositionStart === false )
 		{
-			$PositionStart = StrrPos( $Line, ' ' );
+			$PositionStart = strrpos( $Line, ' ' );
 			
 			if( $PositionStart === false )
 			{
@@ -335,10 +335,10 @@
 			}
 		}
 		
-		return SubStr( $Line, $PositionStart + 1 );
+		return trim( substr( $Line, $PositionStart ) );
 	}
 	
-	/*
+	/**
 	 * @endsection
 	 */
 	
