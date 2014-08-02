@@ -32,6 +32,8 @@
 		$File = str_replace( "\r\n", "\n", $File );
 		$File = str_replace( "\r", "\n", $File );
 		
+		$BeginsWithComment = substr( $File, 0, 2 ) === '/*';
+		
 		$File = explode( "\n", $File );
 		
 		$Lines = Count( $File );
@@ -82,8 +84,6 @@
 					else if( $InSection && substr( $Comment[ 0 ], 0, 11 ) === '@endsection' )
 					{
 						$InSection = false;
-						
-						goto SkipAddingFunction;
 					}
 					
 					$Function = Array(
@@ -106,8 +106,6 @@
 						
 						$Constants[ ] = $Function;
 					}
-					
-				SkipAddingFunction:
 					
 					$CommentBlock = Array();
 					$FunctionBuffer = Array();
@@ -151,17 +149,10 @@
 			}
 		}
 		
-		// If first comment contains 'All rights reserved.', it's probably copyright nonsense
-		if( !empty( $Constants ) && strpos( $Constants[ 0 ][ 'Comment' ], 'All rights reserved.' ) !== false )
+		// Skip first comment
+		if( $BeginsWithComment && !empty( $Constants ) )
 		{
-			if( preg_match( '/#define (?!_)/', $Constants[ 0 ][ 'Constant' ] ) === 1 )
-			{
-				$Constants[ 0 ][ 'Comment' ] = 'Unclassified';
-			}
-			else
-			{
-				array_shift( $Constants );
-			}
+			array_shift( $Constants );
 		}
 		
 		$BigListOfFunctions[ $FileName ] = $Functions;
@@ -192,12 +183,12 @@
 		
 		if( substr( $Comment, -2 ) === '*/' )
 		{
-			$Comment = trim(substr( $Comment, 0, -2 ) );
+			$Comment = trim( substr( $Comment, 0, -2 ) );
 		}
 		
 		if( substr( $Comment, 0, 2 ) === '/*' )
 		{
-			$Comment = trim(substr( $Comment, 2 ) );
+			$Comment = trim( substr( $Comment, 2 ) );
 		}
 		
 		return $Comment;
@@ -252,20 +243,20 @@
 		
 		if( $tags !== '' )
 		{
-			if( $tags[0] !== '@' )
+			if( $tags[ 0 ] !== '@' )
 			{
 				throw new Exception( 'A tag block started with text instead of an actual tag, this makes the tag block invalid: ' . $tags );
 			}
 			
-			foreach( explode("\n", $tags) as $tag_line )
+			foreach( explode( "\n", $tags ) as $tag_line )
 			{
-				if( isset( $tag_line[0] ) && $tag_line[0] === '@' )
+				if( isset( $tag_line[ 0 ] ) && $tag_line[ 0 ] === '@' )
 				{
 					$result[] = $tag_line;
 				}
 				else
 				{
-					$result[count($result) - 1] .= "\n" . $tag_line;
+					$result[ count( $result ) - 1 ] .= "\n" . $tag_line;
 				}
 			}
 			

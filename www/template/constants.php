@@ -13,23 +13,38 @@
 <h1 class="page-header">List of constants in <?php echo htmlspecialchars( $PageName ); ?>.inc</h1>
 
 <?php
- 	$Count = 0;
- 	
-	echo '<ul>';
-	
 	foreach( $Results as $Result )
 	{
-		echo '<li><a href="#constant-' . ++$Count . '">' . htmlspecialchars( $Result[ 'Comment' ] ) . '</a></li>';
-	}
-	
-	echo '</ul>';
-	
-	$Count = 0;
-	
-	foreach( $Results as $Result )
-	{
-		echo '<h4 class="sub-header" id="constant-' . ++$Count . '">' . htmlspecialchars( $Result[ 'Comment' ] ) . '</h4>';
-		echo '<pre>' . htmlspecialchars( $Result[ 'Constant' ] ) . '</pre>';
+		if( $Result[ 'Comment' ] === '@endsection' )
+		{
+			echo '<div class="clearfix" style="height:100px"></div>';
+			continue;
+		}
+		
+		$Tags = json_decode( $Result[ 'Tags' ], true );
+		
+		if( Empty( $Result[ 'Constant' ] ) )
+		{
+			echo '<h2 class="sub-header">' . htmlspecialchars( $Result[ 'Comment' ] ) . '</h2>';
+		}
+		else
+		{
+			echo '<pre class="description" style="font-weight:bold">' . htmlspecialchars( $Result[ 'Comment' ] ) . '</pre>';
+		}
+		
+		if( !Empty( $Tags ) )
+		{
+			foreach( $Tags as $Tag )
+			{
+				echo '<h4 class="sub-header2">' . ucfirst( $Tag[ 'Tag' ] ) . '</h4>';
+				echo '<pre class="description">' . htmlspecialchars( $Tag[ 'Description' ] ) . '</pre>';
+			}
+		}
+		
+		if( !Empty( $Result[ 'Constant' ] ) )
+		{
+			echo '<pre>' . htmlspecialchars( $Result[ 'Constant' ] ) . '</pre><hr>';
+		}
 	}
 ?>
 
