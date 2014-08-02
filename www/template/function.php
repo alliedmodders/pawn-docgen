@@ -61,7 +61,7 @@
 		else
 		{
 			echo '<h4 class="sub-header2">' . ucfirst( $Tag[ 'Tag' ] ) . '</h4>';
-			echo '<code style="background:none">' . htmlspecialchars( $Tag[ 'Description' ] ) . '</code>';
+			echo '<pre class="description">' . htmlspecialchars( $Tag[ 'Description' ] ) . '</pre>';
 		}
 		
 	}
