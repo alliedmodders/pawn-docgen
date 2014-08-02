@@ -19,6 +19,21 @@
 				
 				<input class="form-control typeahead" type="text" placeholder="Search functions">
 				
+				<noscript>
+					<style>
+						.typeahead {
+							display: none;
+						}
+						
+						.bg-primary {
+							padding: 10px;
+							text-align: center;
+						}
+					</style>
+					
+					<p class="bg-primary">Search requires javascript to work</p>
+				</noscript>
+				
 				<div id="sidebar-files-search"></div>
 				<div id="sidebar-files">
 					<?php require __DIR__ . '/sidebar.php'; ?>
