@@ -37,6 +37,7 @@
 		$Lines = Count( $File );
 		$Count = 0;
 		
+		$InSection = false;
 		$OpenComment = false;
 		$FunctionUntilNextCommentBlock = false;
 		$CommentBlock = Array();
@@ -72,8 +73,21 @@
 					$Comment = ParseCommentBlock( $Comment );
 					$Comment = SplitCommentBlock( $Comment );
 					
+					if( substr( $Comment[ 0 ], 0, 8 ) === '@section' )
+					{
+						$InSection = true;
+						
+						$Comment[ 0 ] = substr( $Comment[ 0 ], 8 );
+					}
+					else if( $InSection && substr( $Comment[ 0 ], 0, 11 ) === '@endsection' )
+					{
+						$InSection = false;
+						
+						goto SkipAddingFunction;
+					}
+					
 					$Function = Array(
-						'Comment' => $Comment[ 0 ],
+						'Comment' => Trim( $Comment[ 0 ] ),
 						'CommentTags' => ParseTags( $Comment[ 1 ] )
 					);
 					
@@ -92,6 +106,8 @@
 						
 						$Constants[ ] = $Function;
 					}
+					
+				SkipAddingFunction:
 					
 					$CommentBlock = Array();
 					$FunctionBuffer = Array();

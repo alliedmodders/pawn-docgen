@@ -38,10 +38,7 @@
 					<p class="bg-primary">Search requires javascript to work</p>
 				</noscript>
 				
-				<div id="sidebar-files-search"></div>
-				<div id="sidebar-files">
-					<?php require __DIR__ . '/sidebar.php'; ?>
-				</div>
+				<?php require __DIR__ . '/sidebar.php'; ?>
 			</div>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="pjax-container">
 <?php else: ?>
