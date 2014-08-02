@@ -61,6 +61,12 @@ pre.description {
 	margin-top: 0;
 }
 
+.footer {
+	border-top: 1px solid #eee;
+	text-align: right;
+	padding-top: 10px;
+}
+
 @media (min-width: 768px) {
 	.main {
 		padding-right: 40px;
