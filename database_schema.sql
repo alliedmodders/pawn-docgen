@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS `pawnfunctions` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Function` varchar(64) NOT NULL,
   `FullFunction` text NOT NULL,
+  `Type` varchar(32) NOT NULL,
   `Comment` text NOT NULL,
   `Tags` text NOT NULL,
   `IncludeName` varchar(32) NOT NULL,

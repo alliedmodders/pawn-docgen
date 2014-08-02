@@ -11,13 +11,14 @@
 		
 		$Functions = Array();
 		
-		$STH = $Database->query( 'SELECT `Function`, `Comment`, `IncludeName` FROM `' . $Columns[ 'Functions' ] . '`' );
+		$STH = $Database->query( 'SELECT `Function`, `Type`, `Comment`, `IncludeName` FROM `' . $Columns[ 'Functions' ] . '` ORDER BY `Type` ASC' );
 		
 		while( $Function = $STH->fetch() )
 		{
 			$Functions[ $Function[ 'IncludeName' ] ][ ] = Array(
 				'Function' => $Function[ 'Function' ],
-				'Comment' => $Function[ 'Comment' ]	
+				'Comment' => $Function[ 'Comment' ],
+				'Type' => $Function[ 'Type' ],
 			);
 		}
 	}

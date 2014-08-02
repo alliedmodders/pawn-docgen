@@ -31,7 +31,7 @@
 <h1 class="page-header"><?php echo htmlspecialchars( $PageFunction[ 'Function' ] ); ?></h1>
 
 <h4 class="sub-header2">Syntax</h4>
-<code><?php echo htmlspecialchars( $PageFunction[ 'FullFunction' ] ); ?></code>
+<pre class="syntax"><?php echo htmlspecialchars( $PageFunction[ 'FullFunction' ] ); ?></pre>
 
 <?php if( !empty( $Parameters ) ): ?>
 <h4 class="sub-header2">Usage</h4>

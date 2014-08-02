@@ -11,10 +11,22 @@
 				$Function[ 'Function' ] = htmlspecialchars( $Function[ 'Function' ] );
 				
 				echo '<li class="function" data-title="' . $Function[ 'Function' ] . '" data-content="' . htmlspecialchars( $Function[ 'Comment' ] ) . '">';
-				echo '<a href="' . $BaseURL . $File . '/' . $Function[ 'Function' ] . '">' . $Function[ 'Function' ] . '</a>';
+				echo '<a href="' . $BaseURL . $File . '/' . $Function[ 'Function' ] . '"><span class="label label-' . GetFunctionTypeColor( $Function[ 'Type' ] ) . '">' . $Function[ 'Type' ] . '</span> ' . $Function[ 'Function' ] . '</a>';
 				echo '</li>';
 			}
 		}
 		
 		echo '</ul>';
+	}
+	
+	function GetFunctionTypeColor( $Type )
+	{
+		switch( $Type )
+		{
+			case 'forward': return 'info';
+			case 'native': return 'success';
+			case 'stock': return 'warning';
+		}
+		
+		return 'default';
 	}

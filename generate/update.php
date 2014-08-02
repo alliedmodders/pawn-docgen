@@ -330,9 +330,9 @@
 		return $Return;
 	}
 	
-	function GetFunctionName( $Line2 )
+	function GetFunctionName( $Line )
 	{
-		$Line = substr( $Line2, 0, strpos( $Line2, '(' ) );
+		$Line = substr( $Line, 0, strpos( $Line, '(' ) );
 		$Line = trim( $Line );
 		
 		$PositionStart = strrpos( $Line, ':' );
@@ -341,13 +341,19 @@
 		{
 			$PositionStart = strrpos( $Line, ' ' );
 			
-			if( $PositionStart === false )
-			{
-				throw new Exception( 'WTF: ' . $Line2 );	
-			}
+			$FunctionType = substr( $Line, 0, $PositionStart );
+		}
+		else
+		{
+			$FunctionType = substr( $Line, 0, strrpos( $Line, ' ', -$PositionStart ) );
 		}
 		
-		return trim( substr( $Line, $PositionStart + 1 ) );
+		$FunctionName = substr( $Line, $PositionStart + 1 );
+		
+		return Array(
+			trim( $FunctionName ),
+			trim( $FunctionType )
+		);
 	}
 	
 	/**
@@ -363,8 +369,8 @@
 	$StatementInsertFile = $Database->prepare( 'INSERT INTO `' . $Columns[ 'Files' ] . '` (`IncludeName`, `Content`) VALUES (?, ?) '
 	                                         . 'ON DUPLICATE KEY UPDATE `Content` = ?' );
 	
-	$StatementInsertFunction = $Database->prepare( 'INSERT INTO `' . $Columns[ 'Functions' ] . '` (`Function`, `FullFunction`, `Comment`, `Tags`, `IncludeName`) VALUES (?, ?, ?, ?, ?) '
-	                                             . 'ON DUPLICATE KEY UPDATE `FullFunction` = ?, `Comment` = ?, `Tags` = ?, `IncludeName` = ?' );
+	$StatementInsertFunction = $Database->prepare( 'INSERT INTO `' . $Columns[ 'Functions' ] . '` (`Function`, `FullFunction`, `Type`, `Comment`, `Tags`, `IncludeName`) VALUES (?, ?, ?, ?, ?, ?) '
+	                                             . 'ON DUPLICATE KEY UPDATE `FullFunction` = ?, `Type` = ?, `Comment` = ?, `Tags` = ?, `IncludeName` = ?' );
 	
 	$StatementInsertConstant = $Database->prepare( 'INSERT INTO `' . $Columns[ 'Constants' ] . '` (`Constant`, `Comment`, `Tags`, `IncludeName`) VALUES (?, ?, ?, ?)' );
 	
@@ -390,13 +396,15 @@
 				
 				$StatementInsertFunction->execute(
 					Array(
-						$Function[ 'FunctionName' ],
+						$Function[ 'FunctionName' ][ 0 ],
 						$Function[ 'Function' ],
+						$Function[ 'FunctionName' ][ 1 ],
 						$Function[ 'Comment' ],
 						$Tags, 
 						$IncludeName,
 						
 						$Function[ 'Function' ],
+						$Function[ 'FunctionName' ][ 1 ],
 						$Function[ 'Comment' ],
 						$Tags,
 						$IncludeName
