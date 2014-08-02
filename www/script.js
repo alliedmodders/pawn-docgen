@@ -67,6 +67,13 @@
 		}
 	} ).on( 'typeahead:selected', function( a, b, c )
 	{
-		alert( 'Clicked on ' + b.value );
+		var func = $( '[data-title="' + b.value + '"]' );
+		
+		$( '.nav-sidebar.show' ).removeClass( 'show' );
+		
+		func
+			.parent().addClass( 'show' )
+			.end()
+			.find( 'a' ).click();
 	} );
 }());
