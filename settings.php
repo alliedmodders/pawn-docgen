@@ -11,6 +11,9 @@
 		'Files'     => 'pawnfiles'
 	);
 	
+	$BaseURL = '/pawn-docgen/www/';
+	$Project = 'SourceMod';
+	
 	$Database = @new PDO(
 		$Config[ 'ConnectionString' ],
 		$Config[ 'User' ],
