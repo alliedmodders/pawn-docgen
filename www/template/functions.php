@@ -21,7 +21,7 @@
 		<?php
 			foreach( $PageFunctions as $Function )
 			{
-				echo '<tr><td><a href="' . $BaseURL . $CurrentOpenFile . '/' . $Function[ 'Function' ] . '">' . $Function[ 'Function' ] . '</a></td><td><pre class="description">' . htmlspecialchars( $Function[ 'Comment' ] ) . '</pre></td></tr>';
+				echo '<tr><td><a href="' . $BaseURL . $CurrentOpenFile . '/' . htmlspecialchars( $Function[ 'Function' ] ) . '">' . htmlspecialchars( $Function[ 'Function' ] ) . '</a></td><td><pre class="description">' . htmlspecialchars( $Function[ 'Comment' ] ) . '</pre></td></tr>';
 			}
 		?>
 	</table>

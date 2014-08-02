@@ -22,13 +22,13 @@
 <ol class="breadcrumb">
 	<li><a href="<?php echo $BaseURL . $CurrentOpenFile; ?>"><?php echo $CurrentOpenFile; ?>.inc</a></li>
 	<li><a href="<?php echo $BaseURL . $CurrentOpenFile; ?>/__functions">Functions</a></li>
-	<li class="active"><?php echo $PageFunction[ 'Function' ]; ?></li>
+	<li class="active"><?php echo htmlspecialchars( $PageFunction[ 'Function' ] ); ?></li>
 	
 	<li class="pull-right"><a href="<?php echo $BaseURL . $CurrentOpenFile; ?>/__raw">File</a></li>
 	<li class="pull-right"><a href="<?php echo $BaseURL . $CurrentOpenFile; ?>">Constants</a></li>
 </ol>
 
-<h1 class="page-header"><?php echo $PageFunction[ 'Function' ]; ?></h1>
+<h1 class="page-header"><?php echo htmlspecialchars( $PageFunction[ 'Function' ] ); ?></h1>
 
 <h4 class="sub-header2">Syntax</h4>
 <code><?php echo htmlspecialchars( $PageFunction[ 'FullFunction' ] ); ?></code>

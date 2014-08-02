@@ -8,6 +8,8 @@
 		{
 			foreach( $Functions[ $File ] as $Function )
 			{
+				$Function[ 'Function' ] = htmlspecialchars( $Function[ 'Function' ] );
+				
 				echo '<li class="function" data-title="' . $Function[ 'Function' ] . '" data-content="' . htmlspecialchars( $Function[ 'Comment' ] ) . '">';
 				echo '<a href="' . $BaseURL . $File . '/' . $Function[ 'Function' ] . '">' . $Function[ 'Function' ] . '</a>';
 				echo '</li>';

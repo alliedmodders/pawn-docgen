@@ -1,4 +1,8 @@
-<?php if( $RenderLayout ): ?>
+<?php
+	$Title = ( empty( $HeaderTitle ) ? '' : ( htmlspecialchars( $HeaderTitle ) . ' · ' ) ) . $Project . ' Scripting API Reference';
+	
+	if( $RenderLayout ):
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +10,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
-	<title><?php echo ( empty( $HeaderTitle ) ? '' : ( $HeaderTitle . ' · ' ) ) . $Project; ?> Scripting API Reference</title>
+	<title><?php echo $Title; ?></title>
 	
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="<?php echo $BaseURL; ?>style.css">
@@ -41,5 +45,5 @@
 			</div>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="pjax-container">
 <?php else: ?>
-	<title><?php echo ( empty( $HeaderTitle ) ? '' : ( $HeaderTitle . ' · ' ) ) . $Project; ?> Scripting API Reference</title>
+<title><?php echo $Title; ?></title>
 <?php endif; ?>
