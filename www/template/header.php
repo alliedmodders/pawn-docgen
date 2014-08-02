@@ -17,7 +17,7 @@
 			<div class="col-sm-3 col-md-2 sidebar">
 				<div class="header"><?php echo $Project; ?> API</div>
 				
-				<input class="form-control" type="text" placeholder="Search (to be implemented)">
+				<input class="form-control typeahead" type="text" placeholder="Search functions">
 				
 				<div id="sidebar-files-search"></div>
 				<div id="sidebar-files">

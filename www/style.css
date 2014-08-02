@@ -154,3 +154,35 @@ pre.description {
   0%   { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+.twitter-typeahead {
+	width: 100%;
+}
+
+.tt-hint {
+  color: #999
+}
+
+.tt-dropdown-menu {
+  width: 100%;
+  margin-top: 12px;
+  padding: 8px 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.tt-suggestion {
+  padding: 3px 20px;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.tt-suggestion.tt-cursor {
+  color: #fff;
+  background-color: #0097cf;
+}
+
+.tt-suggestion p {
+  margin: 0;
+}

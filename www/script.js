@@ -32,4 +32,41 @@
 			nav.addClass( 'show' );
 		}
 	} );
+	
+	var functions = [];
+	
+	$( '.function' ).each( function( )
+	{
+		var $this = $( this );
+		
+		functions.push( [ $this.data( 'title' ), $this.data( 'content' ) ] );
+	} );
+	
+	$( '.typeahead' ).typeahead(
+	{
+		hint: true,
+		highlight: true,
+		minLength: 1
+	},
+	{
+		name: 'functions',
+		displayKey: 'value',
+		source: function( query, callback )
+		{
+			var matches = [], substrRegex = new RegExp( query, 'i' );
+			
+			$.each( functions, function( i, str )
+			{
+				if( substrRegex.test( str ) )
+				{
+					matches.push( { value: str[ 0 ] } );
+				}
+			} );
+			
+			callback( matches );
+		}
+	} ).on( 'typeahead:selected', function( a, b, c )
+	{
+		alert( 'Clicked on ' + b.value );
+	} );
 }());

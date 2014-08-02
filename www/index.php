@@ -115,6 +115,10 @@
 				require __DIR__ . '/template/constants.php';
 			}
 		}
+		else
+		{
+			require __DIR__ . '/template/404.php';
+		}
 		
 		exit;
 	}
