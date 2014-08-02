@@ -302,12 +302,12 @@
 				
 				break;
 			}
-			case 'error':
-			case 'deprecated':
-			case 'note':
 			case 'return':
 			{
-				$Return[ 'Description' ] = $Line;
+				if( empty( $Line ) )
+				{
+					throw new Exception( '@return can not be empty: ' . $Line );
+				}
 				
 				break;
 			}
@@ -330,7 +330,7 @@
 			}
 			default:
 			{
-				throw new Exception( 'Unknown tag: ' . $Tag );
+				$Return[ 'Description' ] = $Line;
 			}
 		}
 		
