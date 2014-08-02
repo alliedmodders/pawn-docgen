@@ -1,13 +1,10 @@
 (function()
 {
-	var previousTab = <?php echo isset( $CurrentOpenFile ) ? '$( \'#file-' . $CurrentOpenFile . '\' )' : 'false'; ?>;
-	
 	$( '.function' ).popover(
 	{
 		container: 'body',
 		placement: 'right',
 		trigger: 'hover'
-		
 	} );
 	
 	$( document )
@@ -19,20 +16,20 @@
 	{
 		var nav = $( '#file-' + $( this ).text() );
 		
-		if( previousTab !== nav )
+		var visibleNav = $( '.nav-sidebar.show' );
+		
+		if( !visibleNav.is( nav ) )
 		{
-			previousTab.hide( );
-			
-			previousTab = nav;
+			visibleNav.removeClass( 'show' );
 		}
 		
-		if( nav.is( ':hidden' ) )
+		if( nav.hasClass( 'show' ) )
 		{
-			nav.show();
+			nav.removeClass( 'show' );
 		}
 		else
 		{
-			nav.hide();
+			nav.addClass( 'show' );
 		}
 	} );
 }());

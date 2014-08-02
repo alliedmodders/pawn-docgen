@@ -1,7 +1,7 @@
 <?php
 	foreach( $Includes as $File )
 	{
-		echo '<h4 class="file"><a href="' . $BaseURL . $File . '">' . $File . '</a></h4><ul class="nav nav-sidebar" id="file-' . $File . '"' . ( $CurrentOpenFile === $File ? ' style="display:block"' : '' ) . '>';
+		echo '<h4 class="file"><a href="' . $BaseURL . $File . '">' . $File . '</a></h4><ul class="nav nav-sidebar ' . ( $CurrentOpenFile === $File ? ' show' : '' ) . '" id="file-' . $File . '">';
 		
 		if( isset( $Functions[ $File ] ) )
 		{
