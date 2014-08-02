@@ -31,7 +31,8 @@ pre.description {
 }
 
 pre.syntax {
-	padding: 2px 4px;
+	display: inline-block;
+	padding: 6px 8px;
 	color: #c7254e;
 	background-color: #f9f2f4;
 	border-radius: 4px;
@@ -47,11 +48,12 @@ pre, code {
 	display: none;
 }
 
-.nav-sidebar {
+.nav-functions {
 	display: none;
-	margin-right: -21px; /* 20px padding + 1px border */
-	margin-bottom: 20px;
-	margin-left: -20px;
+}
+
+.nav-functions .panel-body {
+	padding: 15px 0;
 }
 
 .nav-sidebar > li > a {

@@ -10,13 +10,18 @@
 	$( document )
 		.pjax( 'a', '#pjax-container' )
 		.on( 'pjax:start', function() { NProgress.start(); } )
-		.on( 'pjax:end',   function() { NProgress.done();  } );
+		.on( 'pjax:end',   function() { NProgress.done();  } )
+		.on( 'pjax:clicked', function( ev )
+			{
+				$( '.function.active' ).removeClass( 'active' );
+				$( ev.target ).parent().addClass( 'active' );
+			} );
 	
 	$( '.file > a' ).on( 'click', function()
 	{
 		var nav = $( '#file-' + $( this ).text() );
 		
-		var visibleNav = $( '.nav-sidebar.show' );
+		var visibleNav = $( '.nav-functions.show' );
 		
 		if( !visibleNav.is( nav ) )
 		{

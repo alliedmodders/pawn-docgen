@@ -82,7 +82,7 @@
 						$FunctionBuffer[ ] = $Line;
 						
 						$Function[ 'FunctionName' ] = GetFunctionName( $Line );
-						$Function[ 'Function' ] = implode( "\n", $FunctionBuffer );
+						$Function[ 'Function' ] = trim( implode( "\n", $FunctionBuffer ) );
 						
 						$Functions[ ] = $Function;
 					}
@@ -108,7 +108,7 @@
 				$Functions[ ] = Array(
 					'Comment' => 'This function has no description.',
 					'CommentTags' => Array(),
-					'Function' => $Line,
+					'Function' => trim( $Line ),
 					'FunctionName' => GetFunctionName( $Line )
 				);
 			}

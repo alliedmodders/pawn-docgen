@@ -2,31 +2,54 @@
 	foreach( $Includes as $File )
 	{
 		echo '<h4 class="file"><a href="' . $BaseURL . $File . '">' . $File . '</a></h4>';
-		echo '<ul class="nav nav-sidebar ' . ( $CurrentOpenFile === $File ? ' show' : '' ) . '" id="file-' . $File . '">';
+		echo '<div class="nav-functions ' . ( $CurrentOpenFile === $File ? ' show' : '' ) . '" id="file-' . $File . '">';
+		
 		
 		if( isset( $Functions[ $File ] ) )
 		{
+			$PreviousFunctionType = 'hypehypehype';
+			$OpenList = false;
+			
 			foreach( $Functions[ $File ] as $Function )
 			{
-				$Function[ 'Function' ] = htmlspecialchars( $Function[ 'Function' ] );
+				if( $PreviousFunctionType !== $Function[ 'Type' ] )
+				{
+					$PreviousFunctionType = $Function[ 'Type' ];
+					
+					if( $OpenList )
+					{
+						echo '</ul></div></div>';
+					}
+					
+					$OpenList = true;
+					
+					echo GetFunctionHeader( $Function[ 'Type' ] ) . '<div class="panel-body"><ul class="nav nav-sidebar">';
+				}
 				
-				echo '<li class="function" data-title="' . $Function[ 'Function' ] . '" data-content="' . htmlspecialchars( $Function[ 'Comment' ] ) . '">';
-				echo '<a href="' . $BaseURL . $File . '/' . $Function[ 'Function' ] . '"><span class="label label-' . GetFunctionTypeColor( $Function[ 'Type' ] ) . '">' . $Function[ 'Type' ] . '</span> ' . $Function[ 'Function' ] . '</a>';
+				$FunctionName = htmlspecialchars( $Function[ 'Function' ] );
+				
+				echo '<li class="function' . ( $CurrentOpenFunction === $FunctionName ? ' active' : '' ) . '" data-title="' . $FunctionName. '" data-content="' . htmlspecialchars( $Function[ 'Comment' ] ) . '">';
+				echo '<a href="' . $BaseURL . $File . '/' . urlencode( $Function[ 'Function' ] ) . '">' . $FunctionName . '</a>';
 				echo '</li>';
+			}
+			
+			if( $OpenList )
+			{
+				echo '</ul></div></div>';
 			}
 		}
 		
-		echo '</ul>';
+		echo '</div>';
 	}
 	
-	function GetFunctionTypeColor( $Type )
+	function GetFunctionHeader( $Type )
 	{
 		switch( $Type )
 		{
-			case 'forward': return 'info';
-			case 'native': return 'success';
-			case 'stock': return 'warning';
+			case 'forward': return '<div class="panel panel-info"><div class="panel-heading">Forwards</div>';
+			case 'native': return '<div class="panel panel-success"><div class="panel-heading">Natives</div>';
+			case 'stock': return '<div class="panel panel-warning"><div class="panel-heading">Stocks</div>';
 		}
 		
-		return 'default';
+		return '<div class="panel panel-primary"><div class="panel-heading">' . $Type . '</div>';
 	}

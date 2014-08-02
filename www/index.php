@@ -6,12 +6,13 @@
 	if( $RenderLayout )
 	{
 		$CurrentOpenFile = false;
+		$CurrentOpenFunction = false;
 		
 		$Includes = $Database->query( 'SELECT `ID`, `IncludeName` FROM `' . $Columns[ 'Files' ] . '` ORDER BY `IncludeName` ASC' )->fetchAll( PDO :: FETCH_KEY_PAIR );
 		
 		$Functions = Array();
 		
-		$STH = $Database->query( 'SELECT `Function`, `Type`, `Comment`, `IncludeName` FROM `' . $Columns[ 'Functions' ] . '` ORDER BY `Type` ASC' );
+		$STH = $Database->query( 'SELECT `Function`, `Type`, `Comment`, `IncludeName` FROM `' . $Columns[ 'Functions' ] . '` ORDER BY `Type` ASC, `Function` ASC' );
 		
 		while( $Function = $STH->fetch() )
 		{
@@ -88,7 +89,9 @@
 						exit;
 					}
 					
-					$HeaderTitle = $Action . ' · ' . $HeaderTitle;
+					$CurrentOpenFunction = $PageFunction[ 'Function' ];
+					
+					$HeaderTitle = $PageFunction[ 'Function' ] . ' · ' . $HeaderTitle;
 					
 					require __DIR__ . '/template/function.php';
 				}
