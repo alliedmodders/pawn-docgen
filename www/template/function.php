@@ -33,9 +33,6 @@
 <h4 class="sub-header2">Syntax</h4>
 <code><?php echo htmlspecialchars( $PageFunction[ 'FullFunction' ] ); ?></code>
 
-<h4 class="sub-header2">Notes</h4>
-<pre class="description"><?php echo htmlspecialchars( $PageFunction[ 'Comment' ] ); ?></pre>
-
 <?php if( !empty( $Parameters ) ): ?>
 <h4 class="sub-header2">Usage</h4>
 <div class="table-responsive">
@@ -49,6 +46,9 @@
 	</table>
 </div>
 <?php endif; ?>
+
+<h4 class="sub-header2">Notes</h4>
+<pre class="description"><?php echo htmlspecialchars( $PageFunction[ 'Comment' ] ); ?></pre>
 
 <?php if( !empty( $OtherTags ) ): ?>
 <?php

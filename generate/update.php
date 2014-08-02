@@ -62,11 +62,10 @@
 			}
 			
 			$IsCommentOpening = $Beginning === '/*';
+			$IsFunction = preg_match( '/^(stock|functag|native|forward)(?!\s*const)/', $Line ) === 1;
 			
 			if( $FunctionUntilNextCommentBlock )
 			{
-				$IsFunction = preg_match( '/^(stock|functag|native|forward)(?!\s*const)/', $Line ) === 1;
-				
 				if( $IsFunction || $IsCommentOpening || $Count === $Lines )
 				{
 					$Comment = implode( "\n", $CommentBlock );
@@ -103,6 +102,15 @@
 				{
 					$FunctionBuffer[ ] = $Line;
 				}
+			}
+			else if( !$IsCommentOpening && $IsFunction )
+			{
+				$Functions[ ] = Array(
+					'Comment' => 'This function has no description.',
+					'CommentTags' => Array(),
+					'Function' => $Line,
+					'FunctionName' => GetFunctionName( $Line )
+				);
 			}
 			
 			if( $IsCommentOpening )
@@ -325,6 +333,7 @@
 	function GetFunctionName( $Line2 )
 	{
 		$Line = substr( $Line2, 0, strpos( $Line2, '(' ) );
+		$Line = trim( $Line );
 		
 		$PositionStart = strrpos( $Line, ':' );
 		
