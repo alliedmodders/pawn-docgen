@@ -28,7 +28,7 @@
 	
 	foreach( $Results as $Result )
 	{
-		echo '<h2 class="sub-header" id="constant-' . ++$Count . '">' . htmlspecialchars( $Result[ 'Comment' ] ) . '</h2>';
+		echo '<h4 class="sub-header" id="constant-' . ++$Count . '">' . htmlspecialchars( $Result[ 'Comment' ] ) . '</h4>';
 		echo '<pre>' . htmlspecialchars( $Result[ 'Constant' ] ) . '</pre>';
 	}
 ?>

@@ -30,6 +30,10 @@ pre.description {
 	border: 0;
 }
 
+pre, code {
+	font-size: 14px;
+}
+
 /* Hide for mobile, show later */
 .sidebar {
 	display: none;
