@@ -284,7 +284,6 @@
 			'Tag' => $Tag
 		);
 		
-		// https://github.com/phpDocumentor/ReflectionDocBlock/tree/master/src/phpDocumentor/Reflection/DocBlock/Tag
 		switch( $Tag )
 		{
 			case 'param':
@@ -298,7 +297,7 @@
 				
 				if( isset( $Parts[ 1 ] ) )
 				{
-					$Return[ 'Description' ] = $Parts[ 1 ];
+					$Return[ 'Description' ] = RemoveWhitespace( $Matches[ 0 ], $Parts[ 1 ] );
 				}
 				
 				break;
@@ -343,11 +342,34 @@
 			}
 			default:
 			{
-				$Return[ 'Description' ] = $Line;
+				$Return[ 'Description' ] = RemoveWhitespace( $Matches[ 0 ], $Line );
 			}
 		}
 		
 		return $Return;
+	}
+	
+	function RemoveWhitespace( $Original, $Line )
+	{
+		if( strpos( $Line, "\n" ) !== false )
+		{
+			$Position = strpos( $Original, $Line );
+			
+			$Line = explode( "\n", $Line );
+			
+			foreach( $Line as &$Line2 )
+			{
+				// Remove whitespace
+				if( preg_match( '/^\s+$/', substr( $Line2, 0, $Position ) ) === 1 )
+				{
+					$Line2 = substr( $Line2, $Position );
+				}
+			}
+			
+			$Line = implode( "\n", $Line );
+		}
+		
+		return $Line;
 	}
 	
 	function GetFunctionName( $Line )
