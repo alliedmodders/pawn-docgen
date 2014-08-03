@@ -52,19 +52,7 @@
 		{
 			++$Count;
 			
-			/*if( trim( $Line ) === '' && $Count < $Lines )
-			{
-				continue;
-			}*/
-			
-			$Beginning = substr( $Line, 0, 2 );
-			
-			if( $Beginning === '//' )
-			{
-				//throw new Exception( 'Invalid comment type: ' . $Line );
-			}
-			
-			$IsCommentOpening = $Beginning === '/*';
+			$IsCommentOpening = substr( $Line, 0, 2 ) === '/*';
 			$IsFunction = preg_match( '/^(stock|functag|native|forward)(?!\s*const)/', $Line ) === 1;
 			
 			if( $FunctionUntilNextCommentBlock )
