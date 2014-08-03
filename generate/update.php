@@ -345,15 +345,10 @@
 		if( $PositionStart === false )
 		{
 			$PositionStart = strrpos( $Line, ' ' );
-			
-			$FunctionType = substr( $Line, 0, $PositionStart );
-		}
-		else
-		{
-			$FunctionType = substr( $Line, 0, strrpos( $Line, ' ', -$PositionStart ) );
 		}
 		
 		$FunctionName = substr( $Line, $PositionStart + 1 );
+		$FunctionType = substr( $Line, 0, strpos( $Line, ' ' ) );
 		
 		return Array(
 			trim( $FunctionName ),
