@@ -24,9 +24,9 @@
 		}
 	}
 	
-	if( isset( $_SERVER[ 'PATH_INFO' ] ) )
+	if( isset( $_SERVER[ 'QUERY_STRING' ] ) )
 	{
-		$Path = explode( '/', $_SERVER[ 'PATH_INFO' ] );
+		$Path = explode( '/', $_SERVER[ 'QUERY_STRING' ] );
 		
 		$Action = !empty( $Path[ 2 ] ) ? $Path[ 2 ] : false;
 		
