@@ -47,23 +47,40 @@
 </div>
 <?php endif; ?>
 
-<h4 class="sub-header2">Notes</h4>
+<h4 class="sub-header2">Description</h4>
 <pre class="description"><?php echo htmlspecialchars( $PageFunction[ 'Comment' ] ); ?></pre>
 
 <?php if( !empty( $OtherTags ) ): ?>
 <?php
 	foreach( $OtherTags as $Tag )
 	{
-		if( $Tag[ 'Tag' ] === 'noreturn' )
+		switch( $Tag[ 'Tag' ] )
 		{
-			echo '<div class="alert alert-info" role="alert">This function does not return anything</div>';
+			case 'noreturn':
+			{
+				echo '<h4 class="sub-header2">Return</h4>';
+				echo '<pre class="description">This function has no return value.</pre>';
+				break;
+			}
+			case 'deprecated':
+			{
+				echo '<div class="alert alert-danger" role="alert" style="margin-top:20px">';
+				echo '<p>This function has been deprecated, do NOT use it</p>';
+				
+				if( !empty( $Tag[ 'Description' ] ) )
+				{
+					echo '<p><strong>Reason:</strong> ' . htmlspecialchars( $Tag[ 'Description' ] ) . '</p>';
+				}
+				
+				echo '</div>';
+				break;
+			}
+			default:
+			{
+				echo '<h4 class="sub-header2">' . ucfirst( $Tag[ 'Tag' ] ) . '</h4>';
+				echo '<pre class="description">' . htmlspecialchars( $Tag[ 'Description' ] ) . '</pre>';
+			}
 		}
-		else
-		{
-			echo '<h4 class="sub-header2">' . ucfirst( $Tag[ 'Tag' ] ) . '</h4>';
-			echo '<pre class="description">' . htmlspecialchars( $Tag[ 'Description' ] ) . '</pre>';
-		}
-		
 	}
 ?>
 <?php endif; ?>

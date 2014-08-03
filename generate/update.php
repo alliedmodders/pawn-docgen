@@ -276,6 +276,7 @@
 	
 	function ParseTag( $Matches )
 	{
+		$FoundReturn = false;
 		$Tag = $Matches[ 1 ];
 		$Line = isset( $Matches[ 2 ] ) ? $Matches[ 2 ] : '';
 		
@@ -302,17 +303,15 @@
 				
 				break;
 			}
-			case 'return':
-			{
-				if( empty( $Line ) )
-				{
-					throw new Exception( '@return can not be empty: ' . $Line );
-				}
-				
-				break;
-			}
 			case 'noreturn':
 			{
+				if( $FoundReturn )
+				{
+					throw new Exception( 'This comment block already has a return comment: ' . $Line );
+				}
+				
+				$FoundReturn = true;
+				
 				if( !empty( $Line ) )
 				{
 					throw new Exception( '@noreturn must not contain any text: ' . $Line );
@@ -327,6 +326,20 @@
 				$Return[ 'Description' ] = $Line;
 				
 				break;
+			}
+			case 'return':
+			{
+				if( $FoundReturn )
+				{
+					throw new Exception( 'This comment block already has a return comment: ' . $Line );
+				}
+				
+				$FoundReturn = true;
+				
+				if( empty( $Line ) )
+				{
+					throw new Exception( '@return can not be empty: ' . $Line );
+				}
 			}
 			default:
 			{
@@ -347,15 +360,10 @@
 		if( $PositionStart === false )
 		{
 			$PositionStart = strrpos( $Line, ' ' );
-			
-			$FunctionType = substr( $Line, 0, $PositionStart );
-		}
-		else
-		{
-			$FunctionType = substr( $Line, 0, strrpos( $Line, ' ', -$PositionStart ) );
 		}
 		
 		$FunctionName = substr( $Line, $PositionStart + 1 );
+		$FunctionType = substr( $Line, 0, strpos( $Line, ' ' ) );
 		
 		return Array(
 			trim( $FunctionName ),

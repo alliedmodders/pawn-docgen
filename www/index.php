@@ -24,22 +24,26 @@
 		}
 	}
 	
-	if( isset( $_SERVER[ 'QUERY_STRING' ] ) )
+	$Path = isset( $_SERVER[ 'QUERY_STRING' ] ) ? trim( $_SERVER[ 'QUERY_STRING' ], '/' ) : '';
+	
+	if( $Path )
 	{
-		$Path = explode( '/', $_SERVER[ 'QUERY_STRING' ] );
+		$Path = explode( '/', $Path );
 		
-		$Action = !empty( $Path[ 2 ] ) ? $Path[ 2 ] : false;
+		$Action = !empty( $Path[ 1 ] ) ? filter_var( $Path[ 1 ], FILTER_SANITIZE_STRING ) : false;
 		
-		if( isset( $Path[ 1 ] ) )
+		if( isset( $Path[ 0 ] ) )
 		{
-			$HeaderTitle = $CurrentOpenFile = $Path[ 1 ];
+			$IncludeName = filter_var( $Path[ 0 ], FILTER_SANITIZE_STRING );
+			
+			$HeaderTitle = $CurrentOpenFile = $IncludeName;
 			
 			if( $Action )
 			{
 				if( $Action === '__raw' )
 				{
 					$STH = $Database->prepare( 'SELECT `Content` FROM `' . $Columns[ 'Files' ] . '` WHERE `IncludeName` = :includeName' );
-					$STH->bindValue( ':includeName', $Path[ 1 ], PDO :: PARAM_STR );
+					$STH->bindValue( ':includeName', $IncludeName, PDO :: PARAM_STR );
 					$STH->execute();
 					
 					$PageFile = $STH->fetch();
@@ -56,14 +60,14 @@
 				else if( $Action === '__functions' )
 				{
 					$STH = $Database->prepare( 'SELECT `Function`, `Comment` FROM `' . $Columns[ 'Functions' ] . '` WHERE `IncludeName` = :includeName' );
-					$STH->bindValue( ':includeName', $Path[ 1 ], PDO :: PARAM_STR );
+					$STH->bindValue( ':includeName', $IncludeName, PDO :: PARAM_STR );
 					$STH->execute();
 					
 					$PageFunctions = $STH->fetchAll();
 					
 					if( Empty( $PageFunctions ) )
 					{
-						header( 'Location: ' . $BaseURL . $Path[ 1 ] . '/__raw' ); // There are no functions, but maybe file exists?
+						header( 'Location: ' . $BaseURL . $IncludeName . '/__raw' ); // There are no functions, but maybe file exists?
 						//require __DIR__ . '/template/404.php';
 						
 						exit;
@@ -76,7 +80,7 @@
 				else
 				{
 					$STH = $Database->prepare( 'SELECT `Function`, `FullFunction`, `Comment`, `Tags`, `IncludeName` FROM `' . $Columns[ 'Functions' ] . '` WHERE `Function` = :functionName AND `IncludeName` = :includeName' );
-					$STH->bindValue( ':includeName', $Path[ 1 ], PDO :: PARAM_STR );
+					$STH->bindValue( ':includeName', $IncludeName, PDO :: PARAM_STR );
 					$STH->bindValue( ':functionName', $Action, PDO :: PARAM_STR );
 					$STH->execute();
 					
@@ -99,20 +103,20 @@
 			else
 			{
 				$STH = $Database->prepare( 'SELECT `Constant`, `Comment`, `Tags` FROM `' . $Columns[ 'Constants' ] . '` WHERE `IncludeName` = :includeName' );
-				$STH->bindValue( ':includeName', $Path[ 1 ], PDO :: PARAM_STR );
+				$STH->bindValue( ':includeName', $IncludeName, PDO :: PARAM_STR );
 				$STH->execute();
 				
 				$Results = $STH->fetchAll();
 				
 				if( Empty( $Results ) )
 				{
-					header( 'Location: ' . $BaseURL . $Path[ 1 ] . '/__functions' ); // There are no constants, but maybe there are functions?
+					header( 'Location: ' . $BaseURL . $IncludeName . '/__functions' ); // There are no constants, but maybe there are functions?
 					//require __DIR__ . '/template/404.php';
 					
 					exit;
 				}
 				
-				$PageName = $Path[ 1 ];
+				$PageName = $IncludeName;
 				
 				$HeaderTitle = 'Constants · ' . $HeaderTitle;
 				
