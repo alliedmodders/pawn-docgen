@@ -302,15 +302,6 @@
 				
 				break;
 			}
-			case 'return':
-			{
-				if( empty( $Line ) )
-				{
-					throw new Exception( '@return can not be empty: ' . $Line );
-				}
-				
-				break;
-			}
 			case 'noreturn':
 			{
 				if( !empty( $Line ) )
@@ -327,6 +318,13 @@
 				$Return[ 'Description' ] = $Line;
 				
 				break;
+			}
+			case 'return':
+			{
+				if( empty( $Line ) )
+				{
+					throw new Exception( '@return can not be empty: ' . $Line );
+				}
 			}
 			default:
 			{
