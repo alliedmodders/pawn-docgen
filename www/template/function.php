@@ -59,7 +59,7 @@
 			case 'noreturn':
 			{
 				echo '<h4 class="sub-header2">Return</h4>';
-				echo '<pre class="description">This function has no return value.</pre>';
+				echo '<pre class="description">' . ( $PageFunction[ 'Type' ] === 'forward' ? 'This forward ignores the returned value.' : 'This function has no return value.' ) . '</pre>';
 				break;
 			}
 			case 'deprecated':

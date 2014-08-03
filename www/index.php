@@ -79,7 +79,7 @@
 				}
 				else
 				{
-					$STH = $Database->prepare( 'SELECT `Function`, `FullFunction`, `Comment`, `Tags`, `IncludeName` FROM `' . $Columns[ 'Functions' ] . '` WHERE `Function` = :functionName AND `IncludeName` = :includeName' );
+					$STH = $Database->prepare( 'SELECT `Function`, `FullFunction`, `Type`, `Comment`, `Tags`, `IncludeName` FROM `' . $Columns[ 'Functions' ] . '` WHERE `Function` = :functionName AND `IncludeName` = :includeName' );
 					$STH->bindValue( ':includeName', $IncludeName, PDO :: PARAM_STR );
 					$STH->bindValue( ':functionName', $Action, PDO :: PARAM_STR );
 					$STH->execute();
