@@ -276,6 +276,7 @@
 	
 	function ParseTag( $Matches )
 	{
+		$FoundReturn = false;
 		$Tag = $Matches[ 1 ];
 		$Line = isset( $Matches[ 2 ] ) ? $Matches[ 2 ] : '';
 		
@@ -304,6 +305,13 @@
 			}
 			case 'noreturn':
 			{
+				if( $FoundReturn )
+				{
+					throw new Exception( 'This comment block already has a return comment: ' . $Line );
+				}
+				
+				$FoundReturn = true;
+				
 				if( !empty( $Line ) )
 				{
 					throw new Exception( '@noreturn must not contain any text: ' . $Line );
@@ -321,6 +329,13 @@
 			}
 			case 'return':
 			{
+				if( $FoundReturn )
+				{
+					throw new Exception( 'This comment block already has a return comment: ' . $Line );
+				}
+				
+				$FoundReturn = true;
+				
 				if( empty( $Line ) )
 				{
 					throw new Exception( '@return can not be empty: ' . $Line );
