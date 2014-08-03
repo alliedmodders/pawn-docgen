@@ -49,6 +49,7 @@
 			case 'forward': return '<div class="panel panel-info"><div class="panel-heading">Forwards</div>';
 			case 'native': return '<div class="panel panel-success"><div class="panel-heading">Natives</div>';
 			case 'stock': return '<div class="panel panel-warning"><div class="panel-heading">Stocks</div>';
+			case 'functag': return '<div class="panel panel-danger"><div class="panel-heading">Functags</div>';
 		}
 		
 		return '<div class="panel panel-primary"><div class="panel-heading">' . $Type . '</div>';

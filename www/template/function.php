@@ -64,8 +64,15 @@
 			}
 			case 'deprecated':
 			{
-				echo '<h4 class="sub-header2">This function has been deprecated, do NOT use it</h4>';
-				echo '<div class="alert alert-danger" role="alert">' . htmlspecialchars( $Tag[ 'Description' ] ) . '</div>';
+				echo '<div class="alert alert-danger" role="alert" style="margin-top:20px">';
+				echo '<p>This function has been deprecated, do NOT use it</p>';
+				
+				if( !empty( $Tag[ 'Description' ] ) )
+				{
+					echo '<p><strong>Reason:</strong> ' . htmlspecialchars( $Tag[ 'Description' ] ) . '</p>';
+				}
+				
+				echo '</div>';
 				break;
 			}
 			default:
