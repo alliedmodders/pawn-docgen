@@ -54,16 +54,26 @@
 <?php
 	foreach( $OtherTags as $Tag )
 	{
-		if( $Tag[ 'Tag' ] === 'noreturn' )
+		switch( $Tag[ 'Tag' ] )
 		{
-			echo '<div class="alert alert-info" role="alert">This function does not return anything</div>';
+			case 'noreturn':
+			{
+				echo '<h4 class="sub-header2">Return</h4>';
+				echo '<pre class="description">This function has no return value.</pre>';
+				break;
+			}
+			case 'deprecated':
+			{
+				echo '<h4 class="sub-header2">This function has been deprecated, do NOT use it</h4>';
+				echo '<div class="alert alert-danger" role="alert">' . htmlspecialchars( $Tag[ 'Description' ] ) . '</div>';
+				break;
+			}
+			default:
+			{
+				echo '<h4 class="sub-header2">' . ucfirst( $Tag[ 'Tag' ] ) . '</h4>';
+				echo '<pre class="description">' . htmlspecialchars( $Tag[ 'Description' ] ) . '</pre>';
+			}
 		}
-		else
-		{
-			echo '<h4 class="sub-header2">' . ucfirst( $Tag[ 'Tag' ] ) . '</h4>';
-			echo '<pre class="description">' . htmlspecialchars( $Tag[ 'Description' ] ) . '</pre>';
-		}
-		
 	}
 ?>
 <?php endif; ?>
