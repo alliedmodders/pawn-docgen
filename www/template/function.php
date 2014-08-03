@@ -40,7 +40,7 @@
 		<?php
 			foreach( $Parameters as $Tag )
 			{
-				echo '<tr><td>' . htmlspecialchars( $Tag[ 'Variable' ] ) . '</td><td>' . htmlspecialchars( $Tag[ 'Description' ] ) . '</td></tr>';
+				echo '<tr><td>' . htmlspecialchars( $Tag[ 'Variable' ] ) . '</td><td><pre class="description">' . htmlspecialchars( $Tag[ 'Description' ] ) . '</pre></td></tr>';
 			}
 		?>
 	</table>
