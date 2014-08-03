@@ -47,7 +47,7 @@
 </div>
 <?php endif; ?>
 
-<h4 class="sub-header2">Notes</h4>
+<h4 class="sub-header2">Description</h4>
 <pre class="description"><?php echo htmlspecialchars( $PageFunction[ 'Comment' ] ); ?></pre>
 
 <?php if( !empty( $OtherTags ) ): ?>
