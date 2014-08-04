@@ -27,5 +27,5 @@ CREATE TABLE IF NOT EXISTS `pawnfunctions` (
   `Tags` text NOT NULL,
   `IncludeName` varchar(32) NOT NULL,
   PRIMARY KEY (`ID`),
-  UNIQUE KEY `Function` (`Function`)
+  UNIQUE KEY `Function` (`Function`,`IncludeName`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;
