@@ -90,7 +90,14 @@
 					}
 					else
 					{
-						$Function[ 'Constant' ] = trim( implode( "\n", $FunctionBuffer ) );
+						$FunctionBuffer = implode( "\n", $FunctionBuffer );
+						
+						if( strpos( $FunctionBuffer, "\t" ) !== false )
+						{
+							$FunctionBuffer = ConvertTabsToSpaces( $FunctionBuffer );
+						}
+						
+						$Function[ 'Constant' ] = trim( $FunctionBuffer );
 						
 						$Constants[ ] = $Function;
 					}
@@ -161,6 +168,11 @@
 	
 	function ParseCommentBlock( $Comment )
 	{
+		if( strpos( $Comment, "\t" ) !== false )
+		{
+			$Comment = ConvertTabsToSpaces( $Comment );
+		}
+		
 		$Comment = trim(
 			preg_replace(
 				'#[ \t]*(?:\/\*\*|\*\/|\*)?[ \t]{0,1}(.*)?#u',
@@ -381,6 +393,22 @@
 		);
 	}
 	
+	function ConvertTabsToSpaces( $Text )
+	{
+		$Text = explode( "\n", $Text );
+		
+		foreach( $Text as &$Line )
+		{
+			while( ( $Position = mb_strpos( $Line, "\t" ) ) !== false )
+			{
+				$PreTab = $Position ? mb_substr( $Line, 0, $Position ) : '';
+				$Line = $PreTab . str_repeat( ' ', 4 - ( mb_strlen( $PreTab ) % 4 ) ) . mb_substr( $Line, $Position + 1 );
+			}
+		}
+		
+		return implode( "\n", $Text );
+	}
+	
 	/**
 	 * @endsection
 	 */
@@ -471,3 +499,7 @@
 	}
 	
 	echo 'OK' . PHP_EOL;
+	
+	/**
+	 * @endsection
+	 */

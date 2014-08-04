@@ -14,29 +14,49 @@
 
 <?php
 	$InSection = 0;
+	$InSectionBody = 0;
 	
 	foreach( $Results as $Result )
 	{
+		$ClosePanel = false;
+		$Tags = json_decode( $Result[ 'Tags' ], true );
+		
 		if( substr( $Result[ 'Comment' ], 0, 8 ) === '@section' )
 		{
 			$InSection++;
 			
-			echo '<div class="panel panel-info"><div class="panel-heading">' . htmlspecialchars( substr( $Result[ 'Comment' ], 9 ) ) . '</div><div class="panel-body">';
+			echo '<div class="panel panel-info"><div class="panel-heading">' . htmlspecialchars( substr( $Result[ 'Comment' ], 9 ) ) . '</div>';
 			
-			continue;
+			if( Empty( $Tags ) && Empty( $Result[ 'Constant' ] ) )
+			{
+				$InSectionBody++;
+				
+				echo '<div class="panel-body">';
+				
+				continue;
+			}
 		}
 		else if( $InSection > 0 && $Result[ 'Comment' ] === '@endsection' )
 		{
 			$InSection--;
 			
-			echo '</div></div>';
+			if( $InSectionBody > 0 )
+			{
+				$InSectionBody--;
+				
+				echo '</div>';
+			}
+			
+			echo '</div>';
 			
 			continue;
 		}
-		
-		echo '<div class="panel panel-primary"><div class="panel-heading">' . htmlspecialchars( $Result[ 'Comment' ] ) . '</div>';
-		
-		$Tags = json_decode( $Result[ 'Tags' ], true );
+		else
+		{
+			echo '<div class="panel panel-primary"><div class="panel-heading">' . htmlspecialchars( $Result[ 'Comment' ] ) . '</div>';
+			
+			$ClosePanel = true;
+		}
 		
 		if( !Empty( $Tags ) )
 		{
@@ -53,15 +73,23 @@
 		
 		if( !Empty( $Result[ 'Constant' ] ) )
 		{
-			echo '<div class="panel-footer"><pre class="description"><code data-language="c">' . htmlspecialchars( $Result[ 'Constant' ] ) . '</code></pre></div>';
+			echo '<div class="panel-footer"><pre class="description">' . htmlspecialchars( $Result[ 'Constant' ] ) . '</pre></div>';
 		}
 		
-		echo '</div>';
+		if( $ClosePanel )
+		{
+			echo '</div>';
+		}
 	}
 	
 	while( --$InSection > 0 )
 	{
-		echo '</div></div>';
+		echo '</div>';
+	}
+	
+	while( --$InSectionBody > 0 )
+	{
+		echo '</div>';
 	}
 ?>
 

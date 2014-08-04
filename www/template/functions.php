@@ -15,8 +15,10 @@
 <div class="table-responsive">
 	<table class="table table-bordered table-hover">
 		<thead>
-			<th>Function</th>
-			<th>Description</th>
+			<tr>
+				<th>Function</th>
+				<th>Description</th>
+			</tr>
 		</thead>
 		<?php
 			foreach( $PageFunctions as $Function )
