@@ -63,7 +63,7 @@
 					$Comment = ParseCommentBlock( $Comment );
 					$Comment = SplitCommentBlock( $Comment );
 					
-					if( substr( $Comment[ 0 ], 0, 8 ) === '@section' )
+					/*if( substr( $Comment[ 0 ], 0, 8 ) === '@section' )
 					{
 						$InSection = true;
 						
@@ -72,7 +72,7 @@
 					else if( $InSection && substr( $Comment[ 0 ], 0, 11 ) === '@endsection' )
 					{
 						$InSection = false;
-					}
+					}*/
 					
 					$Function = Array(
 						'Comment' => Trim( $Comment[ 0 ] ),

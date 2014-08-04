@@ -4,8 +4,7 @@
 		echo '<h4 class="file"><a href="' . $BaseURL . $File . '">' . $File . '</a></h4>';
 		echo '<div class="nav-functions ' . ( $CurrentOpenFile === $File ? ' show' : '' ) . '" id="file-' . $File . '">';
 		
-		
-		if( isset( $Functions[ $File ] ) )
+		if( !empty( $Functions[ $File ] ) )
 		{
 			$PreviousFunctionType = 'hypehypehype';
 			$OpenList = false;
@@ -23,7 +22,7 @@
 					
 					$OpenList = true;
 					
-					echo GetFunctionHeader( $Function[ 'Type' ] ) . '<div class="panel-body"><ul class="nav nav-sidebar">';
+					echo GetFunctionHeader( $Function[ 'Type' ] ) . '<div class="panel-body panel-sidebar"><ul class="nav nav-sidebar">';
 				}
 				
 				$FunctionName = htmlspecialchars( $Function[ 'Function' ] );
@@ -37,6 +36,10 @@
 			{
 				echo '</ul></div></div>';
 			}
+		}
+		else
+		{
+			echo '<div class="panel panel-primary"><div class="panel-heading">No functions</div><div class="panel-body">This include file has no functions.</div></div>';
 		}
 		
 		echo '</div>';

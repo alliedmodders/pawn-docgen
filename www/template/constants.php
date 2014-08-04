@@ -13,38 +13,55 @@
 <h1 class="page-header">List of constants in <?php echo htmlspecialchars( $PageName ); ?>.inc</h1>
 
 <?php
+	$InSection = 0;
+	
 	foreach( $Results as $Result )
 	{
-		if( $Result[ 'Comment' ] === '@endsection' )
+		if( substr( $Result[ 'Comment' ], 0, 8 ) === '@section' )
 		{
-			echo '<div class="clearfix" style="height:100px"></div>';
+			$InSection++;
+			
+			echo '<div class="panel panel-info"><div class="panel-heading">' . htmlspecialchars( substr( $Result[ 'Comment' ], 9 ) ) . '</div><div class="panel-body">';
+			
+			continue;
+		}
+		else if( $InSection > 0 && $Result[ 'Comment' ] === '@endsection' )
+		{
+			$InSection--;
+			
+			echo '</div></div>';
+			
 			continue;
 		}
 		
-		$Tags = json_decode( $Result[ 'Tags' ], true );
+		echo '<div class="panel panel-primary"><div class="panel-heading">' . htmlspecialchars( $Result[ 'Comment' ] ) . '</div>';
 		
-		if( Empty( $Result[ 'Constant' ] ) )
-		{
-			echo '<h2 class="sub-header">' . htmlspecialchars( $Result[ 'Comment' ] ) . '</h2>';
-		}
-		else
-		{
-			echo '<pre class="description" style="font-weight:bold">' . htmlspecialchars( $Result[ 'Comment' ] ) . '</pre>';
-		}
+		$Tags = json_decode( $Result[ 'Tags' ], true );
 		
 		if( !Empty( $Tags ) )
 		{
+			echo '<div class="panel-body">';
+			
 			foreach( $Tags as $Tag )
 			{
 				echo '<h4 class="sub-header2">' . ucfirst( $Tag[ 'Tag' ] ) . '</h4>';
 				echo '<pre class="description">' . htmlspecialchars( $Tag[ 'Description' ] ) . '</pre>';
 			}
+			
+			echo '</div>';
 		}
 		
 		if( !Empty( $Result[ 'Constant' ] ) )
 		{
-			echo '<pre>' . htmlspecialchars( $Result[ 'Constant' ] ) . '</pre><hr>';
+			echo '<div class="panel-footer"><pre class="description"><code data-language="c">' . htmlspecialchars( $Result[ 'Constant' ] ) . '</code></pre></div>';
 		}
+		
+		echo '</div>';
+	}
+	
+	while( --$InSection > 0 )
+	{
+		echo '</div></div>';
 	}
 ?>
 
