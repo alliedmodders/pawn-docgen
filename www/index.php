@@ -65,6 +65,8 @@
 			{
 				if( $Action === '__raw' )
 				{
+					KidsNeverUseGotosPlease_ShowRaw:
+					
 					$STH = $Database->prepare( 'SELECT `Content` FROM `' . $Columns[ 'Files' ] . '` WHERE `IncludeName` = :includeName' );
 					$STH->bindValue( ':includeName', $IncludeName, PDO :: PARAM_STR );
 					$STH->execute();
@@ -82,6 +84,10 @@
 				}
 				else if( $Action === '__functions' )
 				{
+					$NotGoto = true;
+					
+					KidsNeverUseGotosPlease_ShowFunctions:
+					
 					$STH = $Database->prepare( 'SELECT `Function`, `Comment` FROM `' . $Columns[ 'Functions' ] . '` WHERE `IncludeName` = :includeName' );
 					$STH->bindValue( ':includeName', $IncludeName, PDO :: PARAM_STR );
 					$STH->execute();
@@ -90,10 +96,15 @@
 					
 					if( Empty( $PageFunctions ) )
 					{
-						header( 'Location: ' . $BaseURL . $IncludeName . '/__raw' ); // There are no functions, but maybe file exists?
-						//require __DIR__ . '/template/404.php';
-						
-						exit;
+						if( isset( $NotGoto ) )
+						{
+							header( 'Location: ' . $BaseURL . $IncludeName );
+							exit;
+						}
+						else
+						{
+							goto KidsNeverUseGotosPlease_ShowRaw; // I use goto to prevent unnecessary redirects, and to match behaviour of old SourceMod's docgen
+						}
 					}
 					
 					$HeaderTitle = 'Functions · ' . $HeaderTitle;
@@ -133,10 +144,7 @@
 				
 				if( Empty( $Results ) )
 				{
-					header( 'Location: ' . $BaseURL . $IncludeName . '/__functions' ); // There are no constants, but maybe there are functions?
-					//require __DIR__ . '/template/404.php';
-					
-					exit;
+					goto KidsNeverUseGotosPlease_ShowFunctions; // I use goto to prevent unnecessary redirects, and to match behaviour of old SourceMod's docgen
 				}
 				
 				$PageName = $IncludeName;
