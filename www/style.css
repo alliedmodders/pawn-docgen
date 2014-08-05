@@ -71,6 +71,18 @@ pre, code {
 	background-color: #428bca;
 }
 
+.permalink {
+	color: #FFF;
+}
+
+.permalink:hover {
+	color: #F5F7FA;
+}
+
+.panel-info > .panel-heading > .permalink {
+	color: #31708F;
+}
+
 .main {
 	padding: 20px;
 }

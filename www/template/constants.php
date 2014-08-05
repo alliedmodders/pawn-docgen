@@ -25,7 +25,10 @@
 		{
 			$InSection++;
 			
-			echo '<div class="panel panel-info"><div class="panel-heading">' . htmlspecialchars( substr( $Result[ 'Comment' ], 9 ) ) . '</div>';
+			$Slug = StringToSlug( $Result[ 'Comment' ] );
+			
+			echo '<div class="panel panel-info" id="' . $Slug . '">';
+			echo '<div class="panel-heading">' . htmlspecialchars( substr( $Result[ 'Comment' ], 9 ) ) . '<a href="#' . $Slug . '" class="permalink pull-right">#</a></div>';
 			
 			if( Empty( $Tags ) && Empty( $Result[ 'Constant' ] ) )
 			{
@@ -53,7 +56,10 @@
 		}
 		else
 		{
-			echo '<div class="panel panel-primary"><div class="panel-heading">' . htmlspecialchars( $Result[ 'Comment' ] ) . '</div>';
+			$Slug = StringToSlug( $Result[ 'Comment' ] );
+			
+			echo '<div class="panel panel-primary" id="' . $Slug . '">';
+			echo '<div class="panel-heading">' . htmlspecialchars( $Result[ 'Comment' ] ) . '<a href="#' . $Slug . '" class="permalink pull-right">#</a></div>';
 			
 			$ClosePanel = true;
 		}
@@ -95,4 +101,12 @@
 
 <?php
 	require __DIR__ . '/footer.php';
+	
+	function StringToSlug( $String )
+	{
+		$String = preg_replace( '/[^A-Za-z0-9-]+/', '-', $String );
+		$String = trim( $String, "- \t\n\r\0\x0B" );
+		
+		return strtolower( $String );
+	}
 ?>
