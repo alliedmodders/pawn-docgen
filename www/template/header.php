@@ -15,7 +15,7 @@
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="<?php echo $BaseURL; ?>style.css">
 </head>
-<body>
+<body data-baseurl="<?php echo $BaseURL; ?>">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-3 col-md-2 sidebar">

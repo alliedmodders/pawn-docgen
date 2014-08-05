@@ -1,7 +1,13 @@
 <?php
 	require __DIR__ . '/../settings.php';
 	
+	$Path = isset( $_SERVER[ 'QUERY_STRING' ] ) ? trim( $_SERVER[ 'QUERY_STRING' ], '/' ) : '';
 	$RenderLayout = !isset( $_SERVER[ 'HTTP_X_PJAX' ] ) || $_SERVER[ 'HTTP_X_PJAX' ] !== 'true';
+	
+	if( substr( $Path, 0, 8 ) === '__search' )
+	{
+		$RenderLayout = false;
+	}
 	
 	if( $RenderLayout )
 	{
@@ -24,17 +30,34 @@
 		}
 	}
 	
-	$Path = isset( $_SERVER[ 'QUERY_STRING' ] ) ? trim( $_SERVER[ 'QUERY_STRING' ], '/' ) : '';
-	
 	if( $Path )
 	{
-		$Path = explode( '/', $Path );
+		$Path = explode( '/', $Path, 2 );
 		
 		$Action = !empty( $Path[ 1 ] ) ? filter_var( $Path[ 1 ], FILTER_SANITIZE_STRING ) : false;
 		
 		if( isset( $Path[ 0 ] ) )
 		{
 			$IncludeName = filter_var( $Path[ 0 ], FILTER_SANITIZE_STRING );
+			
+			if( $IncludeName === '__search' )
+			{
+				if( empty( $Action ) )
+				{
+					exit;
+				}
+				
+				$Action = '%' . Str_Replace( Array( '\\', '%', '_' ), Array( '\\\\', '\%', '\_' ), $Action ) . '%';
+				
+				$STH = $Database->prepare( 'SELECT `IncludeName` as `includeName`, `Comment` as `value` FROM `' . $Columns[ 'Constants' ] . '` WHERE `Constant` LIKE ? OR `Comment` LIKE ?' );
+				$STH->execute( Array( $Action, $Action ) );
+				
+				$Results = $STH->fetchAll();
+				
+				echo json_encode( $Results );
+				
+				exit;
+			}
 			
 			$HeaderTitle = $CurrentOpenFile = $IncludeName;
 			
