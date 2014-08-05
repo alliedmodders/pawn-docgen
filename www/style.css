@@ -27,11 +27,15 @@
 	color: #563D7C;
 }
 
+pre, code {
+	font-size: 14px;
+	border: 0;
+}
+
 pre.description {
 	background: none;
 	margin: 0;
 	padding: 0;
-	border: 0;
 }
 
 pre.syntax {
@@ -43,9 +47,7 @@ pre.syntax {
 	border: 0;
 }
 
-pre, code {
-	font-size: 14px;
-}
+
 
 /* Hide for mobile, show later */
 .sidebar {
