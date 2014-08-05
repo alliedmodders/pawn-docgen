@@ -83,6 +83,16 @@ pre, code {
 	color: #31708F;
 }
 
+.panel:target {
+	border-color: #faebcc;
+}
+
+.panel:target > .panel-heading {
+	color: #8a6d3b;
+	background-color: #fcf8e3;
+	border-color: #faebcc;
+}
+
 .main {
 	padding: 20px;
 }
