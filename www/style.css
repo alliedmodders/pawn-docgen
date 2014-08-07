@@ -47,8 +47,6 @@ pre.syntax {
 	border: 0;
 }
 
-
-
 /* Hide for mobile, show later */
 .sidebar {
 	display: none;
@@ -95,12 +93,8 @@ pre.syntax {
 	border-color: #faebcc;
 }
 
-.main {
+.container-fluid {
 	padding: 20px;
-}
-
-.main .page-header {
-	margin-top: 0;
 }
 
 .footer {
@@ -110,7 +104,11 @@ pre.syntax {
 }
 
 @media (min-width: 768px) {
-	.main {
+	body {
+		margin-left: 300px;
+	}
+	
+	.container-fluid {
 		padding-right: 40px;
 		padding-left: 40px;
 	}
@@ -122,6 +120,7 @@ pre.syntax {
 		left: 0;
 		z-index: 1000;
 		display: block;
+		width: 300px;
 		padding: 20px;
 		overflow-x: hidden;
 		overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
