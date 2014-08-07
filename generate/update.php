@@ -63,16 +63,11 @@
 					$Comment = ParseCommentBlock( $Comment );
 					$Comment = SplitCommentBlock( $Comment );
 					
-					/*if( substr( $Comment[ 0 ], 0, 8 ) === '@section' )
+					if( substr( $Comment[ 0 ], 0, 11 ) === '@deprecated' )
 					{
-						$InSection = true;
-						
-						$Comment[ 0 ] = substr( $Comment[ 0 ], 8 );
+						$Comment[ 1 ] = $Comment[ 0 ] . "\n" . $Comment[ 1 ];
+						$Comment[ 0 ] = 'This function has no description.';
 					}
-					else if( $InSection && substr( $Comment[ 0 ], 0, 11 ) === '@endsection' )
-					{
-						$InSection = false;
-					}*/
 					
 					$Function = Array(
 						'Comment' => Trim( $Comment[ 0 ] ),
