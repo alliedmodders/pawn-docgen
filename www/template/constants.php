@@ -71,7 +71,11 @@
 			foreach( $Tags as $Tag )
 			{
 				echo '<h4 class="sub-header2">' . ucfirst( $Tag[ 'Tag' ] ) . '</h4>';
-				echo '<pre class="description">' . htmlspecialchars( $Tag[ 'Description' ] ) . '</pre>';
+				
+				if( isset( $Tag[ 'Description' ] ) )
+				{
+					echo '<pre class="description">' . htmlspecialchars( $Tag[ 'Description' ] ) . '</pre>';
+				}
 			}
 			
 			echo '</div>';
