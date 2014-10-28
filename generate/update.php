@@ -122,7 +122,7 @@
 				
 				if( $Line === '}' )
 				{
-					$Function[ 'Function' ] = trim( implode( "\n", $MethodMapBuffer ) );
+					$Function[ 'Function' ] = implode( "\n", $MethodMapBuffer );
 					
 					$Functions[ ] = $Function;
 					
