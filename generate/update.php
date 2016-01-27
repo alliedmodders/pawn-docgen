@@ -54,7 +54,7 @@
 			++$Count;
 			
 			$IsCommentOpening = substr( $Line, 0, 2 ) === '/*';
-			$IsFunction = preg_match( '/^(stock|functag|native|forward|methodmap)(?!\s*const)/', $Line ) === 1;
+			$IsFunction = preg_match( '/^(stock|functag|native|forward|methodmap)(?!\s*const\s)/', $Line ) === 1;
 			
 			if( $FunctionUntilNextCommentBlock )
 			{
