@@ -42,7 +42,6 @@
 		$InSection = false;
 		$OpenComment = false;
 		$FunctionUntilNextCommentBlock = false;
-		$MethodMapBuffer = Array();
 		$CommentBlock = Array();
 		$FunctionBuffer = Array();
 		
@@ -54,7 +53,7 @@
 			++$Count;
 			
 			$IsCommentOpening = substr( $Line, 0, 2 ) === '/*';
-			$IsFunction = preg_match( '/^(stock|functag|native|forward|methodmap)(?!\s*const\s)/', $Line ) === 1;
+			$IsFunction = preg_match( '/^(stock|native|forward)(?!\s*const\s)/', $Line ) === 1;
 			
 			if( $FunctionUntilNextCommentBlock )
 			{
@@ -75,14 +74,6 @@
 						'CommentTags' => ParseTags( $Comment[ 1 ] )
 					);
 					
-					if( substr( $Line, 0, 9 ) === 'methodmap' )
-					{
-						$MethodMapBuffer[ ] = $Line;
-						
-						$Function[ 'FunctionName' ] = GetMethodMapName( $Line );
-						
-						$MethodMapUntilEnd = true;
-					}
 					else if( $IsFunction )
 					{
 						$FunctionBuffer[ ] = $Line;
@@ -114,21 +105,6 @@
 				else
 				{
 					$FunctionBuffer[ ] = $Line;
-				}
-			}
-			else if( !empty( $MethodMapBuffer ) )
-			{
-				$MethodMapBuffer[ ] = $Line;
-				
-				if( $Line === '}' )
-				{
-					$Function[ 'Function' ] = implode( "\n", $MethodMapBuffer );
-					
-					$Functions[ ] = $Function;
-					
-					print_r( $Function );
-					
-					$MethodMapBuffer = Array();
 				}
 			}
 			else if( !$IsCommentOpening && $IsFunction )
@@ -412,19 +388,6 @@
 		);
 	}
 	
-	function GetMethodMapName( $Line )
-	{
-		$Line = substr( $Line, 10 );
-		
-		$PositionEnd = strpos( $Line, ' ' );
-		
-		$FunctionName = trim( substr( $Line, 0, $PositionEnd ) );
-		
-		return Array(
-			$FunctionName,
-			$FunctionName
-		);
-	}
 	
 	function ConvertTabsToSpaces( $Text )
 	{
