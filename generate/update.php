@@ -53,7 +53,7 @@
 			++$Count;
 			
 			$IsCommentOpening = substr( $Line, 0, 2 ) === '/*';
-			$IsFunction = preg_match( '/^((stock|native|forward|public)\s+)+(\w+:(\[\d*\]))?\s*\w+\s*\(([^\)]*)\);?$/', $Line ) === 1;			
+			$IsFunction = preg_match( '/^((stock|native|forward|public)\s+)+(\w+:(\[\d*\])?)?\s*\w+\s*\(([^\)]*)\);?$/', $Line ) === 1;
 			
 			if( $FunctionUntilNextCommentBlock )
 			{
@@ -346,25 +346,7 @@
 	
 	function RemoveWhitespace( $Original, $Line )
 	{
-		if( strpos( $Line, "\n" ) !== false )
-		{
-			$Position = strpos( $Original, $Line );
-			
-			$Line = explode( "\n", $Line );
-			
-			foreach( $Line as &$Line2 )
-			{
-				// Remove whitespace
-				if( preg_match( '/^\s+$/', substr( $Line2, 0, $Position ) ) === 1 )
-				{
-					$Line2 = substr( $Line2, $Position );
-				}
-			}
-			
-			$Line = implode( "\n", $Line );
-		}
-		
-		return $Line;
+		return preg_replace('/\s+/', ' ', $Line);
 	}
 	
 	function GetFunctionName( $Line )
@@ -378,7 +360,7 @@
 		{
 				$PositionStart = strrpos($Line, $matches[0][0]) + strlen($matches[0][0]);
 		}
-		
+
 		if( $PositionStart === false )
 		{
 			$PositionStart = strrpos( $Line, ' ' );
