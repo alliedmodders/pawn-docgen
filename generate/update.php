@@ -3,7 +3,7 @@
 	
 	set_time_limit( 300 );
 	
-	$IncludeGLOB = __DIR__ . '/include/*.inc';
+	$IncludeGLOB = __DIR__ . '/../include/*.inc';
 	
 	/**
 	 * @section Parse files and construct arrays of functions and constants
@@ -53,7 +53,7 @@
 			++$Count;
 			
 			$IsCommentOpening = substr( $Line, 0, 2 ) === '/*';
-			$IsFunction = preg_match( '/^(stock|native|forward)(?!\s*const\s)/', $Line ) === 1;
+			$IsFunction = preg_match( '/^((stock|native|forward|public)\s+)+(\w+:(\[\d*\]))?\s*\w+\s*\(([^\)]*)\);?$/', $Line ) === 1;			
 			
 			if( $FunctionUntilNextCommentBlock )
 			{
@@ -74,7 +74,7 @@
 						'CommentTags' => ParseTags( $Comment[ 1 ] )
 					);
 					
-					else if( $IsFunction )
+					if( $IsFunction )
 					{
 						$FunctionBuffer[ ] = $Line;
 						
@@ -374,6 +374,11 @@
 		
 		$PositionStart = strrpos( $Line, ':' );
 		
+		if( preg_match('/(:\[\d*?\])/', $Line, $matches, PREG_OFFSET_CAPTURE) == 1)
+		{
+				$PositionStart = strrpos($Line, $matches[0][0]) + strlen($matches[0][0]);
+		}
+		
 		if( $PositionStart === false )
 		{
 			$PositionStart = strrpos( $Line, ' ' );
@@ -499,3 +504,7 @@
 	/**
 	 * @endsection
 	 */
+
+
+
+
