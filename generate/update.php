@@ -54,7 +54,10 @@
 			
 			$IsCommentOpening = substr( $Line, 0, 2 ) === '/*';
 			$IsFunction = preg_match( '/^((stock|native|forward|public)\s+)+(\w+:(\[\d*\])?)?\s*\w+\s*\(([^\)]*)\);?$/', $Line ) === 1;
-			
+
+			if(preg_match('/\#pragma/', $Line))
+				continue;
+
 			if( $FunctionUntilNextCommentBlock )
 			{
 				if( $IsFunction || $IsCommentOpening || $Count === $Lines )
