@@ -56,7 +56,7 @@
 				continue;
 
 			$IsCommentOpening = substr( $Line, 0, 2 ) === '/*';
-			$IsFunction = preg_match( '/^((stock|native|forward|public)\s+)+(\w+:(\[\d*\])?)?\s*\w+\s*\(([^\)]*)\);?$/', $Line ) === 1;
+			$IsFunction = preg_match( '/^((stock|native|forward|public)\s+)+((\w+:)?(\[[\d\w]*\])?)?\s*\w+\s*\(([^\)]*)\);?$/', $Line ) === 1;
 
 			if( $FunctionUntilNextCommentBlock )
 			{
