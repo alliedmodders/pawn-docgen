@@ -1,14 +1,20 @@
 #!/usr/bin/env php
 <?php
 
+$commands = [
+    'list' => 'List the available commands.',
+];
+
 switch ($argv[0]) {
     case 'list':
-        echo 'list command';
+        foreach ($commands as $command => $description) {
+            echo $command.' - '.$description;
+        }
         break;
 
     default:
         echo 'No command detected.' . PHP_EOL;
-        echo 'To list commands run:' . PHP_EOL;
+        echo PHP_EOL . 'To list commands run:' . PHP_EOL;
         echo 'php ' . __FILE__ . ' list' . PHP_EOL;
         exit;
 }
