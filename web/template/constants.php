@@ -28,7 +28,7 @@ foreach ($Results as $Result) {
         echo '<div class="panel panel-info" id="' . $Slug . '">';
         echo '<div class="panel-heading">' . htmlspecialchars(substr($Result['Comment'], 9)) . '<a href="#' . $Slug . '" class="permalink pull-right">#</a></div>';
 
-        if (Empty($Tags) && Empty($Result['Constant'])) {
+        if (empty($Tags) && empty($Result['Constant'])) {
             $InSectionBody++;
 
             echo '<div class="panel-body">';
@@ -56,7 +56,7 @@ foreach ($Results as $Result) {
         $ClosePanel = true;
     }
 
-    if (!Empty($Tags)) {
+    if (!empty($Tags)) {
         echo '<div class="panel-body">';
 
         foreach ($Tags as $Tag) {
@@ -70,7 +70,7 @@ foreach ($Results as $Result) {
         echo '</div>';
     }
 
-    if (!Empty($Result['Constant'])) {
+    if (!empty($Result['Constant'])) {
         echo '<div class="panel-footer"><pre class="description">' . htmlspecialchars($Result['Constant']) . '</pre></div>';
     }
 

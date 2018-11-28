@@ -34,7 +34,7 @@ foreach ($IncludeList as $FilePath) {
 
     $File = explode("\n", $File);
 
-    $Lines = Count($File);
+    $Lines = count($File);
     $Count = 0;
 
     $InSection = false;
@@ -65,7 +65,7 @@ foreach ($IncludeList as $FilePath) {
                 }
 
                 $Function = [
-                    'Comment' => Trim($Comment[0]),
+                    'Comment' => trim($Comment[0]),
                     'CommentTags' => ParseTags($Comment[1])
                 ];
 
@@ -410,33 +410,29 @@ try {
     foreach ($BigListOfFunctions as $IncludeName => $Functions) {
         $File = file_get_contents($FilesList[$IncludeName]);
 
-        $StatementInsertFile->execute(
-            Array(
-                $IncludeName,
-                $File,
-                $File
-            )
-        );
+        $StatementInsertFile->execute([
+            $IncludeName,
+            $File,
+            $File
+        ]);
 
         foreach ($Functions as $Function) {
             $Tags = json_encode($Function['CommentTags']);
 
-            $StatementInsertFunction->execute(
-                Array(
-                    $Function['FunctionName'][0],
-                    $Function['Function'],
-                    $Function['FunctionName'][1],
-                    $Function['Comment'],
-                    $Tags,
-                    $IncludeName,
+            $StatementInsertFunction->execute([
+                $Function['FunctionName'][0],
+                $Function['Function'],
+                $Function['FunctionName'][1],
+                $Function['Comment'],
+                $Tags,
+                $IncludeName,
 
-                    $Function['Function'],
-                    $Function['FunctionName'][1],
-                    $Function['Comment'],
-                    $Tags,
-                    $IncludeName
-                )
-            );
+                $Function['Function'],
+                $Function['FunctionName'][1],
+                $Function['Comment'],
+                $Tags,
+                $IncludeName
+            ]);
         }
     }
 
@@ -450,14 +446,12 @@ try {
         foreach ($Functions as $Function) {
             $Tags = json_encode($Function['CommentTags']);
 
-            $StatementInsertConstant->execute(
-                Array(
-                    $Function['Constant'],
-                    $Function['Comment'],
-                    $Tags,
-                    $IncludeName
-                )
-            );
+            $StatementInsertConstant->execute([
+                $Function['Constant'],
+                $Function['Comment'],
+                $Tags,
+                $IncludeName
+            ]);
         }
     }
 
