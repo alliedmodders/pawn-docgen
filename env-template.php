@@ -1,5 +1,7 @@
 <?php
 
+$RootDirectory = __DIR__ . '/';
+
 $Config = [
     'ConnectionString' => 'mysql:host=127.0.0.1;dbname=sm;charset=utf8mb4',
     'User' => 'root',

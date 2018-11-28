@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../settings.php';
+require __DIR__ . '/../env.php';
 
 $Path = isset($_SERVER['QUERY_STRING']) ? trim($_SERVER['QUERY_STRING'], '/') : '';
 $RenderLayout = !isset($_SERVER['HTTP_X_PJAX']) || $_SERVER['HTTP_X_PJAX'] !== 'true';
