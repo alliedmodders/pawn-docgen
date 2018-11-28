@@ -394,7 +394,7 @@ function ConvertTabsToSpaces($Text)
  * @section Insert everything into the database
  */
 
-require __DIR__ . '/../settings.php';
+require $RootDirectory . '/env.php';
 
 $StatementInsertFile = $Database->prepare('INSERT INTO `' . $Columns['Files'] . '` (`IncludeName`, `Content`) VALUES (?, ?) '
     . 'ON DUPLICATE KEY UPDATE `Content` = ?');
