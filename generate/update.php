@@ -1,4 +1,9 @@
 <?php
+
+if (!file_exists(__DIR__ . '/../env.php')) {
+    die('Please create your env.php file to continue.' . PHP_EOL);
+}
+
 echo '<pre>';
 
 set_time_limit(300);
