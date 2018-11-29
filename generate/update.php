@@ -35,7 +35,7 @@ $BigListOfConstants = [];
 $FilesList = [];
 
 foreach ($IncludeList as $count => $FilePath) {
-    ProgressBar($count, count($IncludeList));
+    ProgressBar($count, count($IncludeList), 'Parsed functions');
     $File = file_get_contents($FilePath);
 
     $FileName = str_replace('.inc', '', basename($FilePath));
@@ -404,11 +404,11 @@ function ConvertTabsToSpaces($Text)
     return implode("\n", $Text);
 }
 
-function ProgressBar($done, $total)
+function ProgressBar($done, $total, $text)
 {
     $perc = floor(($done / $total) * 100);
     $left = 100 - $perc;
-    $write = sprintf("\033[0G\033[2K[%'={$perc}s>%-{$left}s] - $perc%% - $done/$total", "", "");
+    $write = sprintf("\033[0G\033[2K[%'={$perc}s>%-{$left}s] - $perc%% - $done/$total $text", "", "");
     fwrite(STDERR, $write);
 }
 
@@ -436,7 +436,7 @@ try {
     $count = 0;
     foreach ($BigListOfFunctions as $IncludeName => $Functions) {
         $count++;
-        ProgressBar($count, count($BigListOfFunctions));
+        ProgressBar($count, count($BigListOfFunctions), 'Sent to database');
         $File = file_get_contents($FilesList[$IncludeName]);
 
         $StatementInsertFile->execute([
