@@ -3,7 +3,7 @@
 
     <div class="col-lg-12 footer">
         <p>This documentation was generated automatically using <a href="https://github.com/alliedmodders/pawn-docgen">pawn-docgen</a>
-            written by (<a href="//xpaw.me">xPaw</a> / <a href="https://github.com/b3none">B3none</a>) for <a href="//alliedmods.net/">AlliedMods</a>.</p>
+            written by <a href="https://github.com/b3none">B3none</a> and <a href="//xpaw.me">xPaw</a> for <a href="//alliedmods.net/">AlliedMods</a>.</p>
     </div>
     </div>
     </div>
