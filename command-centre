@@ -5,7 +5,8 @@ $commands = [
     'list' => 'List the available commands.',
     'generate' => 'Generate the docs based on the include files.',
     'get-includes' => 'Grabs the includes directory from the latest sourcemod version ready for generation.',
-    'create-tables' => 'Create database tables.'
+    'create-tables' => 'Create database tables.',
+    'serve' => 'Serve a local copy.'
 ];
 
 $fileName = explode('/', __FILE__);
@@ -35,6 +36,7 @@ function deleteDirectory(string $dirPath) {
 }
 
 switch ($command) {
+    case false:
     case 'list':
         foreach ($commands as $command => $description) {
             echo $command.' - '.$description . PHP_EOL;
@@ -95,8 +97,20 @@ switch ($command) {
         echo 'Success! The tables have been created!' . PHP_EOL;
         break;
 
+    case 'serve':
+        $port = $argv[2] ?? 5000;
+        $serveLocation = 'localhost:' . $port;
+
+        echo 'Serving on ' . $serveLocation . PHP_EOL . PHP_EOL;
+        echo 'To see server output run: cd web; php -S ' . $serveLocation . PHP_EOL;
+
+        exec('cd ' . __DIR__ . '/web/');
+        exec('php -S ' . $serveLocation);
+
+        break;
+
     default:
-        echo 'No command detected.' . PHP_EOL;
+        echo 'No command found :/' . PHP_EOL;
         echo PHP_EOL . 'To list commands run:' . PHP_EOL;
         echo 'php ' . $fileName . ' list' . PHP_EOL;
 }

@@ -13,6 +13,17 @@ Sourcepawn documentation generation.
 2. Generate the includes folder `php command-centre get-include {URL-TO-SM-VERSION}` (If the URL is left blank it will default to the latest version)
 3. Run the generation `php command-centre generate`
 
+# Running locally
+To run a local version use
+
+`php command-centre serve {PORT}`
+
+OR
+
+`cd web && php -S localhost:5000` - Display errors
+
+The default port is `5000`
+
 # Contributors
 [B3none](https://github.com/b3none) for the latest updates.
 
