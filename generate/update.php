@@ -34,7 +34,8 @@ $BigListOfFunctions = [];
 $BigListOfConstants = [];
 $FilesList = [];
 
-foreach ($IncludeList as $FilePath) {
+foreach ($IncludeList as $count => $FilePath) {
+    ProgressBar($count, count($IncludeList));
     $File = file_get_contents($FilePath);
 
     $FileName = str_replace('.inc', '', basename($FilePath));
@@ -127,8 +128,6 @@ foreach ($IncludeList as $FilePath) {
                 $Function['Function'] = implode("\n", $MethodMapBuffer);
 
                 $Functions[] = $Function;
-
-                print_r($Function);
 
                 $MethodMapBuffer = [];
             }
@@ -405,6 +404,14 @@ function ConvertTabsToSpaces($Text)
     return implode("\n", $Text);
 }
 
+function ProgressBar($done, $total)
+{
+    $perc = floor(($done / $total) * 100);
+    $left = 100 - $perc;
+    $write = sprintf("\033[0G\033[2K[%'={$perc}s>%-{$left}s] - $perc%% - $done/$total", "", "");
+    fwrite(STDERR, $write);
+}
+
 /**
  * @endsection
  */
@@ -426,7 +433,10 @@ $StatementInsertConstant = $Database->prepare('INSERT INTO `' . $Columns['Consta
 try {
     $Database->beginTransaction();
 
+    $count = 0;
     foreach ($BigListOfFunctions as $IncludeName => $Functions) {
+        $count++;
+        ProgressBar($count, count($BigListOfFunctions));
         $File = file_get_contents($FilesList[$IncludeName]);
 
         $StatementInsertFile->execute([
@@ -481,7 +491,7 @@ try {
     throw new Exception('Caught PDOException: ' . $e->getMessage());
 }
 
-echo 'OK' . PHP_EOL;
+echo PHP_EOL . 'Success! You can now check the database for the functions.' . PHP_EOL;
 
 /**
  * @endsection
