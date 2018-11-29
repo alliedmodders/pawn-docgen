@@ -102,9 +102,8 @@ switch ($command) {
         $serveLocation = 'localhost:' . $port;
 
         echo 'Serving on ' . $serveLocation . PHP_EOL . PHP_EOL;
-        echo 'To see server output run: cd web; php -S ' . $serveLocation . PHP_EOL;
 
-        exec('cd ' . __DIR__ . '/web/');
+        chdir(__DIR__ . '/web/');
         exec('php -S ' . $serveLocation);
 
         break;

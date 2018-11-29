@@ -18,10 +18,6 @@ To run a local version use
 
 `php command-centre serve {PORT}`
 
-OR
-
-`cd web && php -S localhost:5000` - Display errors
-
 The default port is `5000`
 
 # Contributors
