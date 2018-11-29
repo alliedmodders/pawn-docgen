@@ -4,7 +4,8 @@
 $commands = [
     'list' => 'List the available commands.',
     'generate' => 'Generate the docs based on the include files.',
-    'get-includes' => 'Grabs the includes directory from the latest sourcemod version ready for generation.'
+    'get-includes' => 'Grabs the includes directory from the latest sourcemod version ready for generation.',
+    'create-tables' => 'Create database tables.'
 ];
 
 $fileName = explode('/', __FILE__);
@@ -47,11 +48,11 @@ switch ($command) {
         include(__DIR__.'/generate/update.php');
         break;
 
-    case 'get-includes':
+    case 'get-include':
         $latest = $argv[2] ?? 'http://sourcemod.net/latest.php?version=1.9&os=windows';
         $zipFile = __DIR__ . '/generate/latest-sm.zip';
         $sourcemodTemp = __DIR__ . 'generate/sourcemod';
-        $includes = __DIR__ . '/generate/includes';
+        $includes = __DIR__ . '/generate/include';
 
         $file = file_put_contents($zipFile, fopen($latest, 'r'), LOCK_EX);
 
@@ -77,6 +78,21 @@ switch ($command) {
         unlink($zipFile);
 
         echo PHP_EOL;
+        break;
+
+    case 'create-tables':
+        $envFile = __DIR__ . '/env.php';
+
+        // Do we have the env.php file?
+        if (!file_exists($envFile)) {
+            die('Please create your env.php file to continue.' . PHP_EOL);
+        }
+
+        include($envFile);
+
+        $Database->exec(file_get_contents(__DIR__ . '/sql/database_schema.sql'));
+
+        echo 'Success! The tables have been created!' . PHP_EOL;
         break;
 
     default:

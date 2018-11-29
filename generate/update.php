@@ -9,7 +9,7 @@ if (!file_exists(__DIR__ . '/../env.php')) {
 }
 
 // Do we have an includes directory?
-if (!$hasFailed && !is_dir(__DIR__ . '/includes')) {
+if (!$hasFailed && !is_dir(__DIR__ . '/include')) {
     echo 'Please make sure you create the includes directory.';
 }
 
@@ -21,6 +21,7 @@ echo '<pre>';
 
 set_time_limit(300);
 
+$RootDirectory = __DIR__ . '/../';
 $IncludeGLOB = __DIR__ . '/include/*.inc';
 
 /**
