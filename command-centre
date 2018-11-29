@@ -3,7 +3,8 @@
 
 $commands = [
     'list' => 'List the available commands.',
-    'generate' => 'Generate the docs based on the include files.'
+    'generate' => 'Generate the docs based on the include files.',
+    'get-includes' => 'Grabs the includes directory from the latest sourcemod version ready for generation.'
 ];
 
 $fileName = explode('/', __FILE__);
@@ -11,13 +12,35 @@ $fileName = $fileName[count($fileName) - 1];
 
 $command = $argv[1] ?? false;
 
+function deleteDirectory(string $dirPath) {
+    if (!is_dir($dirPath)) {
+        throw new InvalidArgumentException("$dirPath must be a directory");
+    }
+
+    if (substr($dirPath, strlen($dirPath) - 1, 1) != '/') {
+        $dirPath .= '/';
+    }
+
+    $files = glob($dirPath . '*', GLOB_MARK);
+    foreach ($files as $file) {
+        if (is_dir($file)) {
+            deleteDirectory($file);
+        } else {
+            unlink($file);
+        }
+    }
+
+    rmdir($dirPath);
+}
+
 switch ($command) {
     case 'list':
         foreach ($commands as $command => $description) {
             echo $command.' - '.$description . PHP_EOL;
-            echo PHP_EOL . 'Running a command:' . PHP_EOL;
-            echo 'php ' . $fileName . ' {COMMAND}' . PHP_EOL;
         }
+
+        echo PHP_EOL . 'Running a command:' . PHP_EOL;
+        echo 'php ' . $fileName . ' {COMMAND}' . PHP_EOL;
         break;
 
     case 'generate':
@@ -25,10 +48,35 @@ switch ($command) {
         break;
 
     case 'get-includes':
-        $latest = $arg[2] ?? 'http://sourcemod.net/latest.php?version=1.9&os=linux';
+        $latest = $argv[2] ?? 'http://sourcemod.net/latest.php?version=1.9&os=windows';
+        $zipFile = __DIR__ . '/generate/latest-sm.zip';
+        $sourcemodTemp = __DIR__ . 'generate/sourcemod';
+        $includes = __DIR__ . '/generate/includes';
 
+        $file = file_put_contents($zipFile, fopen($latest, 'r'), LOCK_EX);
 
+        $zip = new ZipArchive();
+        $res = $zip->open($zipFile);
+        if ($res && $file) {
+            deleteDirectory($sourcemodTemp);
+            mkdir($sourcemodTemp);
 
+            $zip->extractTo($sourcemodTemp);
+            $zip->close();
+
+            deleteDirectory($includes);
+            mkdir($includes);
+
+            rename($sourcemodTemp . '/addons/sourcemod/scripting/include', $includes);
+
+            echo 'Success! Your new folder is in /generate/includes';
+        } else {
+            echo 'Error! Looks like we hit a problem, do it manually you lazy person!';
+        }
+
+        unlink($zipFile);
+
+        echo PHP_EOL;
         break;
 
     default:
