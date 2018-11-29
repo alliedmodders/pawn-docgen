@@ -13,7 +13,9 @@ if (!$hasFailed && !is_dir(__DIR__ . '/includes')) {
     echo 'Please make sure you create the includes directory.';
 }
 
-die(PHP_EOL);
+if ($hasFailed) {
+    die(PHP_EOL);
+}
 
 echo '<pre>';
 
