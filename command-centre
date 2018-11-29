@@ -3,6 +3,7 @@
 
 $commands = [
     'list' => 'List the available commands.',
+    'generate' => 'Generate the docs based on the include files.'
 ];
 
 $fileName = explode('/', __FILE__);
@@ -21,6 +22,12 @@ switch ($command) {
 
     case 'generate':
         include(__DIR__.'/generate/update.php');
+        break;
+
+    case 'get-includes':
+        $latest = $arg[2] ?? 'http://sourcemod.net/latest.php?version=1.9&os=linux';
+
+
 
         break;
 

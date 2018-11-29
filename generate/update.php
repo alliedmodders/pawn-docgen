@@ -1,8 +1,19 @@
 <?php
 
+$hasFailed = false;
+
+// Do we have the env.php file?
 if (!file_exists(__DIR__ . '/../env.php')) {
-    die('Please create your env.php file to continue.' . PHP_EOL);
+    echo 'Please create your env.php file to continue.';
+    $hasFailed = true;
 }
+
+// Do we have an includes directory?
+if (!$hasFailed && !is_dir(__DIR__ . '/includes')) {
+    echo 'Please make sure you create the includes directory.';
+}
+
+die(PHP_EOL);
 
 echo '<pre>';
 
