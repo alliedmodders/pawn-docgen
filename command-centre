@@ -45,14 +45,14 @@ switch ($command) {
         break;
 
     case 'generate':
-        include(__DIR__.'/generate/update.php');
+        include(__DIR__ . '/src/update.php');
         break;
 
     case 'get-include':
         $latest = $argv[2] ?? 'http://sourcemod.net/latest.php?version=1.9&os=windows';
-        $zipFile = __DIR__ . '/generate/latest-sm.zip';
-        $sourcemodTemp = __DIR__ . 'generate/sourcemod';
-        $includes = __DIR__ . '/generate/include';
+        $zipFile = __DIR__ . '/src/latest-sm.zip';
+        $sourcemodTemp = __DIR__ . 'src/sourcemod';
+        $includes = __DIR__ . '/src/include';
 
         $file = file_put_contents($zipFile, fopen($latest, 'r'), LOCK_EX);
 
