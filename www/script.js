@@ -36,7 +36,32 @@
 		{
 			nav.addClass( 'show' );
 		}
+
+		// Scroll clicked function into view (align to top)
+		this.scrollIntoView(true);
 	} );
+
+	// Scroll to active function on page load
+	$(window).on('load', function ()
+	{
+		var activeFile = $('.nav-functions.show');
+		if (activeFile.length > 0)
+		{
+			var activeFunction = $('.function.active');
+			if (activeFunction.length > 0)
+			{
+				activeFunction[0].scrollIntoView({ block: "center" });
+			}
+			else
+			{
+				var prevElement = activeFile.prev();
+				if (prevElement.length > 0)
+				{
+					prevElement[0].scrollIntoView(true);
+				}
+			}
+		}
+	});
 	
 	var functions = [];
 	
